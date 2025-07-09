@@ -1,8 +1,18 @@
 # Astro Component Library - Development Plan
 
+## Project Goal & Vision
+
+**What**: Build a premium, award-winning component library that sets new standards for modern web development.
+
+**Why**: Create a comprehensive design system that empowers developers to build beautiful, accessible, and performant applications without compromising on user experience or developer experience.
+
+**Impact**: Provide the missing link between design and development - a component library that's both visually stunning and technically excellent, enabling teams to ship faster while maintaining the highest quality standards.
+
+**Target**: Modern web applications requiring exceptional UI/UX, accessibility compliance, and performance optimization.
+
 ## Scaffolding Overview
 
-This is a production-ready Astro 5 component library with atomic design patterns. The scaffold includes:
+This is a scaffold of a Astro 5 component library. The scaffold includes:
 
 - **Design System**: Complete retro color palette, typography, and CSS custom properties in `src/styles/`
 - **Theme System**: Light/dark mode with `src/lib/theme.ts` and automatic persistence
@@ -46,6 +56,7 @@ Build a **rich, delightful, award winning, user-friendly component library** tha
 - **CSS Variables**: Leverage design tokens, support theme customization, consistent spacing
 - **Documentation**: Each component showcased with all variants, props, and code examples
 - **Testing**: Visual testing via showcase page, ensure responsive behavior across breakpoints
+- **Dark & Light Mode**: All components must work in both dark and light themes
 
 ### Design Freedom
 
@@ -54,4 +65,46 @@ Build a **rich, delightful, award winning, user-friendly component library** tha
 - **Interaction Design**: Smooth state transitions, micro-feedback, progressive disclosure
 - **Creative Expression**: Push boundaries while maintaining usability and accessibility standards
 
-You MUST follow the Color pallete, but outside off that you have full creative freedom, start with adapting the Button component to your needs. Then continue building out the rest of the components as you see fit.
+You MUST follow the Color pallete, but other than that you have full creative freedom, start with adapting the Button component to your needs. Then continue building out the rest of the components as you see fit.
+
+Must use validation gates
+
+Exact Commands:
+
+🎨 Prettier Commands:
+
+# Format all files (writes changes)
+
+pnpm run format
+
+# Actual command: prettier --write "src/\*_/_.{astro,js,ts,md,json}"
+
+# Check formatting without changing files
+
+pnpm run format:check
+
+# Actual command: prettier --check "src/\*_/_.{astro,js,ts,md,json}"
+
+🔍 ESLint Commands:
+
+# Lint all files (no warnings allowed)
+
+pnpm run lint
+
+# Actual command: eslint . --max-warnings 0
+
+# Lint and auto-fix issues
+
+pnpm run lint:fix
+
+# Actual command: eslint . --fix
+
+✅ Combined Quality Check:
+
+# Run all checks together
+
+pnpm run check
+
+# Actual command: astro check && pnpm run lint && pnpm run
+
+format:check
