@@ -1,0 +1,131 @@
+/* Design Tokens - Retro Color Palette */
+
+:root {
+  /* Primary Brand Colors - Terracotta/Rust */
+  --brand-primary-50: 16 45% 95%; /* #f5f0ed */
+  --brand-primary-100: 16 45% 88%; /* #ebe0db */
+  --brand-primary-200: 16 45% 78%; /* #dcc7bd */
+  --brand-primary-300: 16 45% 68%; /* #cdae9f */
+  --brand-primary-400: 16 45% 58%; /* #be9581 */
+  --brand-primary-500: 16 45% 48%; /* #b85c3c */
+  --brand-primary-600: 16 50% 43%; /* #a64d2f */
+  --brand-primary-700: 16 55% 38%; /* #943e22 */
+  --brand-primary-800: 16 60% 33%; /* #822f15 */
+  --brand-primary-900: 16 65% 28%; /* #702008 */
+
+  /* Secondary Colors - Charcoal */
+  --brand-secondary-50: 25 8% 92%; /* #ebebea */
+  --brand-secondary-100: 25 8% 85%; /* #d7d7d5 */
+  --brand-secondary-200: 25 8% 70%; /* #b8b8b6 */
+  --brand-secondary-300: 25 8% 55%; /* #999997 */
+  --brand-secondary-400: 25 8% 40%; /* #7a7a78 */
+  --brand-secondary-500: 25 8% 25%; /* #5b5b59 */
+  --brand-secondary-600: 25 8% 20%; /* #4a4a48 */
+  --brand-secondary-700: 25 8% 15%; /* #393937 */
+  --brand-secondary-800: 25 8% 10%; /* #282826 */
+  --brand-secondary-900: 25 8% 8%; /* #161514 */
+
+  /* Accent Colors - Golden Beige */
+  --accent-warm-50: 35 100% 97%; /* #fff6e9 */
+  --accent-warm-100: 35 80% 92%; /* #f9ecdb */
+  --accent-warm-200: 35 70% 85%; /* #f0dcc4 */
+  --accent-warm-300: 35 60% 78%; /* #e7ccad */
+  --accent-warm-400: 35 50% 71%; /* #debc96 */
+  --accent-warm-500: 35 40% 64%; /* #e5af7d */
+  --accent-warm-600: 35 45% 57%; /* #d19f66 */
+  --accent-warm-700: 35 50% 50%; /* #bd8f4f */
+  --accent-warm-800: 35 55% 43%; /* #a97f38 */
+  --accent-warm-900: 35 60% 36%; /* #956f21 */
+
+  /* Success Colors - Sage Green */
+  --success-50: 155 35% 95%; /* #f0f7f4 */
+  --success-100: 155 35% 88%; /* #e0efea */
+  --success-200: 155 35% 78%; /* #c7e2d5 */
+  --success-300: 155 35% 68%; /* #aed5c0 */
+  --success-400: 155 35% 58%; /* #9bceb5 */
+  --success-500: 155 35% 48%; /* #82b89e */
+  --success-600: 155 40% 43%; /* #6fa487 */
+  --success-700: 155 45% 38%; /* #5c9070 */
+  --success-800: 155 50% 33%; /* #497c59 */
+  --success-900: 155 55% 28%; /* #366842 */
+
+  /* Typography Scale */
+  --text-display: 4rem; /* 64px */
+  --text-title: 3rem; /* 48px */
+  --text-headline: 2.25rem; /* 36px */
+  --text-subhead: 1.5rem; /* 24px */
+  --text-body-lg: 1.125rem; /* 18px */
+  --text-body: 1rem; /* 16px */
+  --text-body-sm: 0.875rem; /* 14px */
+  --text-caption: 0.75rem; /* 12px */
+  --text-code: 0.875rem; /* 14px */
+  --text-code-sm: 0.75rem; /* 12px */
+
+  /* Spacing Scale */
+  --space-xs: 0.25rem; /* 4px */
+  --space-sm: 0.5rem; /* 8px */
+  --space-md: 1rem; /* 16px */
+  --space-lg: 1.5rem; /* 24px */
+  --space-xl: 2rem; /* 32px */
+  --space-2xl: 3rem; /* 48px */
+  --space-3xl: 4rem; /* 64px */
+  --space-4xl: 6rem; /* 96px */
+
+  /* Border Radius */
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+  --radius-2xl: 1.5rem; /* 24px */
+  --radius-full: 9999px;
+
+  /* Box Shadow */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Light Theme (Default) */
+:root {
+  /* Semantic Colors */
+  --color-background: hsl(var(--accent-warm-50));
+  --color-surface: hsl(var(--accent-warm-100));
+  --color-surface-elevated: hsl(var(--accent-warm-200));
+  
+  --color-text-primary: hsl(var(--brand-secondary-900));
+  --color-text-secondary: hsl(var(--brand-secondary-700));
+  --color-text-muted: hsl(var(--brand-secondary-500));
+  
+  --color-brand-primary: hsl(var(--brand-primary-500));
+  --color-brand-secondary: hsl(var(--accent-warm-500));
+  --color-accent: hsl(var(--success-400));
+  
+  --color-border: hsl(var(--accent-warm-300));
+  --color-border-subtle: hsl(var(--accent-warm-200));
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  /* Semantic Colors */
+  --color-background: hsl(var(--brand-secondary-900));
+  --color-surface: hsl(var(--brand-secondary-700));
+  --color-surface-elevated: hsl(var(--brand-secondary-600));
+  
+  --color-text-primary: hsl(var(--accent-warm-50));
+  --color-text-secondary: hsl(var(--accent-warm-100));
+  --color-text-muted: hsl(var(--accent-warm-300));
+  
+  --color-brand-primary: hsl(var(--brand-primary-400));
+  --color-brand-secondary: hsl(var(--accent-warm-400));
+  --color-accent: hsl(var(--success-300));
+  
+  --color-border: hsl(var(--brand-secondary-500));
+  --color-border-subtle: hsl(var(--brand-secondary-600));
+}
+
+/* Font Families */
+:root {
+  --font-family-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', Consolas, 'Liberation Mono', monospace;
+}

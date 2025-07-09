@@ -1,11 +1,602 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '@/layouts/Layout.astro';
+import ThemeToggle from '@/components/showcase/ThemeToggle.astro';
+import Button from '@/components/atoms/Button.astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Astro Component Library - Retro Design System">
+  <main class="container">
+    <ThemeToggle />
+
+    <!-- Header -->
+    <header class="header">
+      <h1 class="text-center mb-md">Astro Component Library</h1>
+      <p class="text-center text-muted mb-lg">Claude Code vs Gemeni CLI showdown</p>
+    </header>
+
+    <!-- Color Palette Section -->
+    <section class="section" id="colors">
+      <h2 class="mb-lg">Color Palette</h2>
+      <div class="color-section">
+        <h3 class="mb-md">Primary Colors - Terracotta</h3>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(16, 45%, 95%)"></div>
+            <div class="color-info">
+              <span class="color-name">primary-50</span>
+              <span class="color-value">#f5f0ed</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(16, 45%, 88%)"></div>
+            <div class="color-info">
+              <span class="color-name">primary-100</span>
+              <span class="color-value">#ebe0db</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(16, 45%, 78%)"></div>
+            <div class="color-info">
+              <span class="color-name">primary-200</span>
+              <span class="color-value">#dcc7bd</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(16, 45%, 68%)"></div>
+            <div class="color-info">
+              <span class="color-name">primary-300</span>
+              <span class="color-value">#cdae9f</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(16, 45%, 58%)"></div>
+            <div class="color-info">
+              <span class="color-name">primary-400</span>
+              <span class="color-value">#be9581</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(16, 45%, 48%)"></div>
+            <div class="color-info">
+              <span class="color-name">primary-500</span>
+              <span class="color-value">#b85c3c</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(16, 50%, 43%)"></div>
+            <div class="color-info">
+              <span class="color-name">primary-600</span>
+              <span class="color-value">#a64d2f</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(16, 55%, 38%)"></div>
+            <div class="color-info">
+              <span class="color-name">primary-700</span>
+              <span class="color-value">#943e22</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(16, 60%, 33%)"></div>
+            <div class="color-info">
+              <span class="color-name">primary-800</span>
+              <span class="color-value">#822f15</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(16, 65%, 28%)"></div>
+            <div class="color-info">
+              <span class="color-name">primary-900</span>
+              <span class="color-value">#702008</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-section">
+        <h3 class="mb-md">Secondary Colors - Charcoal</h3>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(25, 8%, 92%)"></div>
+            <div class="color-info">
+              <span class="color-name">secondary-50</span>
+              <span class="color-value">#ebebea</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(25, 8%, 85%)"></div>
+            <div class="color-info">
+              <span class="color-name">secondary-100</span>
+              <span class="color-value">#d7d7d5</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(25, 8%, 70%)"></div>
+            <div class="color-info">
+              <span class="color-name">secondary-200</span>
+              <span class="color-value">#b8b8b6</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(25, 8%, 55%)"></div>
+            <div class="color-info">
+              <span class="color-name">secondary-300</span>
+              <span class="color-value">#999997</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(25, 8%, 40%)"></div>
+            <div class="color-info">
+              <span class="color-name">secondary-400</span>
+              <span class="color-value">#7a7a78</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(25, 8%, 25%)"></div>
+            <div class="color-info">
+              <span class="color-name">secondary-500</span>
+              <span class="color-value">#5b5b59</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(25, 8%, 20%)"></div>
+            <div class="color-info">
+              <span class="color-name">secondary-600</span>
+              <span class="color-value">#4a4a48</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(25, 8%, 15%)"></div>
+            <div class="color-info">
+              <span class="color-name">secondary-700</span>
+              <span class="color-value">#393937</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(25, 8%, 10%)"></div>
+            <div class="color-info">
+              <span class="color-name">secondary-800</span>
+              <span class="color-value">#282826</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(25, 8%, 8%)"></div>
+            <div class="color-info">
+              <span class="color-name">secondary-900</span>
+              <span class="color-value">#161514</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-section">
+        <h3 class="mb-md">Accent Colors - Golden Beige</h3>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(35, 100%, 97%)"></div>
+            <div class="color-info">
+              <span class="color-name">accent-50</span>
+              <span class="color-value">#fff6e9</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(35, 80%, 92%)"></div>
+            <div class="color-info">
+              <span class="color-name">accent-100</span>
+              <span class="color-value">#f9ecdb</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(35, 70%, 85%)"></div>
+            <div class="color-info">
+              <span class="color-name">accent-200</span>
+              <span class="color-value">#f0dcc4</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(35, 60%, 78%)"></div>
+            <div class="color-info">
+              <span class="color-name">accent-300</span>
+              <span class="color-value">#e7ccad</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(35, 50%, 71%)"></div>
+            <div class="color-info">
+              <span class="color-name">accent-400</span>
+              <span class="color-value">#debc96</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(35, 40%, 64%)"></div>
+            <div class="color-info">
+              <span class="color-name">accent-500</span>
+              <span class="color-value">#e5af7d</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(35, 45%, 57%)"></div>
+            <div class="color-info">
+              <span class="color-name">accent-600</span>
+              <span class="color-value">#d19f66</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(35, 50%, 50%)"></div>
+            <div class="color-info">
+              <span class="color-name">accent-700</span>
+              <span class="color-value">#bd8f4f</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(35, 55%, 43%)"></div>
+            <div class="color-info">
+              <span class="color-name">accent-800</span>
+              <span class="color-value">#a97f38</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(35, 60%, 36%)"></div>
+            <div class="color-info">
+              <span class="color-name">accent-900</span>
+              <span class="color-value">#956f21</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-section">
+        <h3 class="mb-md">Success Colors - Sage Green</h3>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(155, 35%, 95%)"></div>
+            <div class="color-info">
+              <span class="color-name">success-50</span>
+              <span class="color-value">#f0f7f4</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(155, 35%, 88%)"></div>
+            <div class="color-info">
+              <span class="color-name">success-100</span>
+              <span class="color-value">#e0efea</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(155, 35%, 78%)"></div>
+            <div class="color-info">
+              <span class="color-name">success-200</span>
+              <span class="color-value">#c7e2d5</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(155, 35%, 68%)"></div>
+            <div class="color-info">
+              <span class="color-name">success-300</span>
+              <span class="color-value">#aed5c0</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(155, 35%, 58%)"></div>
+            <div class="color-info">
+              <span class="color-name">success-400</span>
+              <span class="color-value">#9bceb5</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(155, 35%, 48%)"></div>
+            <div class="color-info">
+              <span class="color-name">success-500</span>
+              <span class="color-value">#82b89e</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(155, 40%, 43%)"></div>
+            <div class="color-info">
+              <span class="color-name">success-600</span>
+              <span class="color-value">#6fa487</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(155, 45%, 38%)"></div>
+            <div class="color-info">
+              <span class="color-name">success-700</span>
+              <span class="color-value">#5c9070</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(155, 50%, 33%)"></div>
+            <div class="color-info">
+              <span class="color-name">success-800</span>
+              <span class="color-value">#497c59</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: hsl(155, 55%, 28%)"></div>
+            <div class="color-info">
+              <span class="color-name">success-900</span>
+              <span class="color-value">#366842</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography Section -->
+    <section class="section" id="typography">
+      <h2 class="mb-lg">Typography</h2>
+      <div class="typography-showcase">
+        <div class="typography-example">
+          <h1>Display Heading</h1>
+          <p class="font-mono text-sm text-muted">--text-display: 4rem (64px)</p>
+        </div>
+        <div class="typography-example">
+          <h2>Title Heading</h2>
+          <p class="font-mono text-sm text-muted">--text-title: 3rem (48px)</p>
+        </div>
+        <div class="typography-example">
+          <h3>Headline</h3>
+          <p class="font-mono text-sm text-muted">--text-headline: 2.25rem (36px)</p>
+        </div>
+        <div class="typography-example">
+          <h4>Subheading</h4>
+          <p class="font-mono text-sm text-muted">--text-subhead: 1.5rem (24px)</p>
+        </div>
+        <div class="typography-example">
+          <p class="text-lg">Large body text for emphasis and readability.</p>
+          <p class="font-mono text-sm text-muted">--text-body-lg: 1.125rem (18px)</p>
+        </div>
+        <div class="typography-example">
+          <p>Regular body text for most content and descriptions.</p>
+          <p class="font-mono text-sm text-muted">--text-body: 1rem (16px)</p>
+        </div>
+        <div class="typography-example">
+          <p class="text-sm">Small text for captions and secondary information.</p>
+          <p class="font-mono text-sm text-muted">--text-body-sm: 0.875rem (14px)</p>
+        </div>
+        <div class="typography-example">
+          <p class="text-caption">Caption text for labels and metadata.</p>
+          <p class="font-mono text-sm text-muted">--text-caption: 0.75rem (12px)</p>
+        </div>
+        <div class="typography-example">
+          <code class="bg-surface-elevated p-sm rounded">code snippet</code>
+          <p class="font-mono text-sm text-muted">--text-code: 0.875rem (14px)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Components Section -->
+    <section class="section" id="components">
+      <h2 class="mb-lg">Components</h2>
+
+      <!-- Button Component -->
+      <div class="component-section">
+        <h3 class="mb-md">Button</h3>
+
+        <!-- Button Variants -->
+        <div class="component-group">
+          <h4 class="mb-sm">Variants</h4>
+          <div class="component-grid">
+            <div class="component-example">
+              <Button variant="primary">Primary</Button>
+              <code class="component-code">variant="primary"</code>
+            </div>
+            <div class="component-example">
+              <Button variant="secondary">Secondary</Button>
+              <code class="component-code">variant="secondary"</code>
+            </div>
+            <div class="component-example">
+              <Button variant="success">Success</Button>
+              <code class="component-code">variant="success"</code>
+            </div>
+            <div class="component-example">
+              <Button variant="outline">Outline</Button>
+              <code class="component-code">variant="outline"</code>
+            </div>
+            <div class="component-example">
+              <Button variant="ghost">Ghost</Button>
+              <code class="component-code">variant="ghost"</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Button Sizes -->
+        <div class="component-group">
+          <h4 class="mb-sm">Sizes</h4>
+          <div class="component-grid">
+            <div class="component-example">
+              <Button size="sm">Small</Button>
+              <code class="component-code">size="sm"</code>
+            </div>
+            <div class="component-example">
+              <Button size="md">Medium</Button>
+              <code class="component-code">size="md"</code>
+            </div>
+            <div class="component-example">
+              <Button size="lg">Large</Button>
+              <code class="component-code">size="lg"</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Button States -->
+        <div class="component-group">
+          <h4 class="mb-sm">States</h4>
+          <div class="component-grid">
+            <div class="component-example">
+              <Button>Normal</Button>
+              <code class="component-code">Default state</code>
+            </div>
+            <div class="component-example">
+              <Button disabled>Disabled</Button>
+              <code class="component-code">disabled</code>
+            </div>
+            <div class="component-example">
+              <Button loading>Loading</Button>
+              <code class="component-code">loading</code>
+            </div>
+            <div class="component-example">
+              <Button fullWidth>Full Width</Button>
+              <code class="component-code">fullWidth</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Button with Icons -->
+        <div class="component-group">
+          <h4 class="mb-sm">With Icons</h4>
+          <div class="component-grid">
+            <div class="component-example">
+              <Button icon="lucide:plus" iconPosition="left">Add Item</Button>
+              <code class="component-code">icon="lucide:plus"</code>
+            </div>
+            <div class="component-example">
+              <Button icon="lucide:arrow-right" iconPosition="right">Continue</Button>
+              <code class="component-code">iconPosition="right"</code>
+            </div>
+            <div class="component-example">
+              <Button variant="outline" icon="lucide:download">Download</Button>
+              <code class="component-code">variant="outline" icon="lucide:download"</code>
+            </div>
+            <div class="component-example">
+              <Button variant="ghost" icon="lucide:settings" size="sm">Settings</Button>
+              <code class="component-code">variant="ghost" size="sm"</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Button as Link -->
+        <div class="component-group">
+          <h4 class="mb-sm">As Link</h4>
+          <div class="component-grid">
+            <div class="component-example">
+              <Button href="#" variant="primary">Internal Link</Button>
+              <code class="component-code">href="#"</code>
+            </div>
+            <div class="component-example">
+              <Button
+                href="https://example.com"
+                target="_blank"
+                variant="outline"
+                icon="lucide:external-link">External Link</Button
+              >
+              <code class="component-code">href="..." target="_blank"</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>
+
+<style>
+  .header {
+    padding: var(--space-2xl) 0;
+  }
+
+  .color-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .color-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .color-swatch {
+    height: 80px;
+    width: 100%;
+  }
+
+  .color-info {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .color-name {
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .color-value {
+    font-family: var(--font-family-mono);
+    font-size: var(--text-body-sm);
+    color: var(--color-text-muted);
+  }
+
+  .typography-showcase {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .typography-example {
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .text-caption {
+    font-size: var(--text-caption);
+    color: var(--color-text-muted);
+  }
+
+  .section {
+    margin-bottom: var(--space-4xl);
+  }
+
+  /* Component Showcase Styles */
+  .component-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .component-group {
+    margin-bottom: var(--space-xl);
+  }
+
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .component-example {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    align-items: flex-start;
+  }
+
+  .component-code {
+    font-family: var(--font-family-mono);
+    font-size: var(--text-body-sm);
+    color: var(--color-text-muted);
+    background: var(--color-surface-elevated);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  /* Special handling for full width buttons */
+  .component-example:has(.btn-full-width) {
+    align-items: stretch;
+  }
+
+  .component-example:has(.btn-full-width) .component-code {
+    align-self: flex-start;
+  }
+</style>

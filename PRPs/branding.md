@@ -3,96 +3,110 @@
 #### **Primary Brand Colors**
 
 ```css
-/* Warm Amber-Orange (Primary) */
---brand-primary-50: 39 100% 97%; /* #fefcf3 */
---brand-primary-100: 39 100% 91%; /* #fef3c7 */
---brand-primary-200: 39 96% 80%; /* #fde68a */
---brand-primary-400: 39 92% 65%; /* #fbbf24 */
---brand-primary-500: 39 85% 55%; /* #f59e0b */
---brand-primary-600: 39 88% 50%; /* #d97706 */
---brand-primary-700: 39 90% 40%; /* #b45309 */
---brand-primary-800: 39 88% 32%; /* #92400e */
---brand-primary-900: 39 80% 25%; /* #78350f */
+/* Warm Terracotta/Rust (Primary) */
+--brand-primary-50: 16 45% 95%; /* #f5f0ed */
+--brand-primary-100: 16 45% 88%; /* #ebe0db */
+--brand-primary-200: 16 45% 78%; /* #dcc7bd */
+--brand-primary-300: 16 45% 68%; /* #cdae9f */
+--brand-primary-400: 16 45% 58%; /* #be9581 */
+--brand-primary-500: 16 45% 48%; /* #b85c3c */
+--brand-primary-600: 16 50% 43%; /* #a64d2f */
+--brand-primary-700: 16 55% 38%; /* #943e22 */
+--brand-primary-800: 16 60% 33%; /* #822f15 */
+--brand-primary-900: 16 65% 28%; /* #702008 */
 
-/* Deep Navy-Slate (Secondary) */
---brand-secondary-50: 210 40% 98%; /* #f8fafc */
---brand-secondary-100: 210 40% 96%; /* #f1f5f9 */
---brand-secondary-200: 214 32% 91%; /* #e2e8f0 */
---brand-secondary-400: 215 20% 65%; /* #94a3b8 */
---brand-secondary-500: 215 16% 47%; /* #64748b */
---brand-secondary-600: 215 19% 35%; /* #475569 */
---brand-secondary-700: 215 25% 27%; /* #334155 */
---brand-secondary-800: 217 33% 17%; /* #1e293b */
---brand-secondary-900: 222 47% 11%; /* #0f172a */
+/* Deep Charcoal (Secondary) */
+--brand-secondary-50: 25 8% 92%; /* #ebebea */
+--brand-secondary-100: 25 8% 85%; /* #d7d7d5 */
+--brand-secondary-200: 25 8% 70%; /* #b8b8b6 */
+--brand-secondary-300: 25 8% 55%; /* #999997 */
+--brand-secondary-400: 25 8% 40%; /* #7a7a78 */
+--brand-secondary-500: 25 8% 25%; /* #5b5b59 */
+--brand-secondary-600: 25 8% 20%; /* #4a4a48 */
+--brand-secondary-700: 25 8% 15%; /* #393937 */
+--brand-secondary-800: 25 8% 10%; /* #282826 */
+--brand-secondary-900: 25 8% 8%; /* #161514 */
 ```
 
 #### **Accent Colors**
 
 ```css
-/* Warm Cream-Beige (Accent) */
---accent-warm-50: 30 40% 98%; /* #faf8f5 */
---accent-warm-100: 30 33% 94%; /* #f3f0e9 */
---accent-warm-200: 30 29% 88%; /* #e6dfd4 */
---accent-warm-300: 30 25% 78%; /* #d4c5b0 */
---accent-warm-400: 30 20% 65%; /* #b8a082 */
---accent-warm-500: 30 15% 50%; /* #8b7355 */
+/* Warm Golden Beige (Accent) */
+--accent-warm-50: 35 100% 97%; /* #fff6e9 */
+--accent-warm-100: 35 80% 92%; /* #f9ecdb */
+--accent-warm-200: 35 70% 85%; /* #f0dcc4 */
+--accent-warm-300: 35 60% 78%; /* #e7ccad */
+--accent-warm-400: 35 50% 71%; /* #debc96 */
+--accent-warm-500: 35 40% 64%; /* #e5af7d */
+--accent-warm-600: 35 45% 57%; /* #d19f66 */
+--accent-warm-700: 35 50% 50%; /* #bd8f4f */
+--accent-warm-800: 35 55% 43%; /* #a97f38 */
+--accent-warm-900: 35 60% 36%; /* #956f21 */
 
-/* Success Green (Functional) */
---success: 160 84% 39%; /* #059669 */
---success-light: 160 84% 88%; /* #d1fae5 */
+/* Sage Green (Success/Accent) */
+--success-50: 155 35% 95%; /* #f0f7f4 */
+--success-100: 155 35% 88%; /* #e0efea */
+--success-200: 155 35% 78%; /* #c7e2d5 */
+--success-300: 155 35% 68%; /* #aed5c0 */
+--success-400: 155 35% 58%; /* #9bceb5 */
+--success-500: 155 35% 48%; /* #82b89e */
+--success-600: 155 40% 43%; /* #6fa487 */
+--success-700: 155 45% 38%; /* #5c9070 */
+--success-800: 155 50% 33%; /* #497c59 */
+--success-900: 155 55% 28%; /* #366842 */
 
-/* Warning Orange (Functional) */
---warning: 25 95% 53%; /* #f97316 */
---warning-light: 25 95% 90%; /* #fed7aa */
+/* Warning (derived from primary) */
+--warning: 16 45% 48%; /* #b85c3c */
+--warning-light: 16 45% 88%; /* #ebe0db */
 ```
 
-### **Retro Beige Light Theme**
+### **Retro Warm Light Theme**
 
 ```css
 :root {
   /* Backgrounds */
-  --background: 30 40% 98%; /* Warm cream white */
-  --surface: 30 33% 94%; /* Light beige */
-  --surface-elevated: 30 29% 88%; /* Warm beige */
+  --background: 35 100% 97%; /* #fff6e9 - Warm cream white */
+  --surface: 35 80% 92%; /* #f9ecdb - Light golden beige */
+  --surface-elevated: 35 70% 85%; /* #f0dcc4 - Warm beige */
 
   /* Text */
-  --text-primary: 222 47% 11%; /* Deep navy */
-  --text-secondary: 215 25% 27%; /* Medium slate */
-  --text-muted: 215 16% 47%; /* Light slate */
+  --text-primary: 25 8% 8%; /* #161514 - Deep charcoal */
+  --text-secondary: 25 8% 15%; /* #393937 - Medium charcoal */
+  --text-muted: 25 8% 25%; /* #5b5b59 - Light charcoal */
 
   /* Brand Elements */
-  --brand-primary: 39 85% 55%; /* Warm amber */
-  --brand-secondary: 215 25% 27%; /* Deep slate */
-  --accent: 30 25% 78%; /* Warm beige */
+  --brand-primary: 16 45% 48%; /* #b85c3c - Warm terracotta */
+  --brand-secondary: 35 40% 64%; /* #e5af7d - Golden beige */
+  --accent: 155 35% 58%; /* #9bceb5 - Sage green */
 
   /* Borders & Dividers */
-  --border: 30 25% 78%; /* Warm beige */
-  --border-subtle: 30 29% 88%; /* Light warm beige */
+  --border: 35 60% 78%; /* #e7ccad - Warm beige */
+  --border-subtle: 35 70% 85%; /* #f0dcc4 - Light warm beige */
 }
 ```
 
-### **Warm Dark Theme**
+### **Retro Warm Dark Theme**
 
 ```css
 .dark {
   /* Backgrounds */
-  --background: 222 47% 11%; /* Deep navy */
-  --surface: 217 33% 17%; /* Dark slate */
-  --surface-elevated: 215 25% 27%; /* Medium slate */
+  --background: 25 8% 8%; /* #161514 - Deep charcoal */
+  --surface: 25 8% 15%; /* #393937 - Medium charcoal */
+  --surface-elevated: 25 8% 20%; /* #4a4a48 - Lighter charcoal */
 
   /* Text */
-  --text-primary: 30 40% 98%; /* Warm cream */
-  --text-secondary: 30 33% 94%; /* Light beige */
-  --text-muted: 30 25% 78%; /* Warm beige */
+  --text-primary: 35 100% 97%; /* #fff6e9 - Warm cream */
+  --text-secondary: 35 80% 92%; /* #f9ecdb - Light golden beige */
+  --text-muted: 35 60% 78%; /* #e7ccad - Warm beige */
 
   /* Brand Elements */
-  --brand-primary: 39 92% 65%; /* Bright amber */
-  --brand-secondary: 39 100% 91%; /* Light amber */
-  --accent: 30 25% 78%; /* Warm beige */
+  --brand-primary: 16 50% 58%; /* #c16c4c - Lighter terracotta */
+  --brand-secondary: 35 50% 71%; /* #debc96 - Warm golden */
+  --accent: 155 40% 68%; /* #aed5c0 - Lighter sage green */
 
   /* Borders & Dividers */
-  --border: 215 25% 27%; /* Medium slate */
-  --border-subtle: 217 33% 17%; /* Dark slate */
+  --border: 25 8% 25%; /* #5b5b59 - Medium charcoal */
+  --border-subtle: 25 8% 20%; /* #4a4a48 - Lighter charcoal */
 }
 ```
 
@@ -168,8 +182,8 @@ import { Icon } from 'astro-icon/components'
 ```css
 /* Gentle progression indicators */
 .progress-indicator {
-  --primary-warm: hsl(39, 85%, 55%); /* Warm amber */
-  --secondary-warm: hsl(39, 85%, 55%, 0.2); /* Gentle amber */
+  --primary-warm: hsl(16, 45%, 48%); /* Warm terracotta */
+  --secondary-warm: hsl(16, 45%, 48%, 0.2); /* Gentle terracotta */
   animation: gentle-pulse 2s ease-in-out infinite;
 }
 
@@ -180,20 +194,47 @@ import { Icon } from 'astro-icon/components'
 
 /* Card styling */
 .card {
-  background: rgba(250, 248, 245, 0.95);
+  background: rgba(255, 246, 233, 0.95); /* Warm cream background */
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(212, 197, 176, 0.4);
+  border: 1px solid rgba(231, 204, 173, 0.4); /* Warm beige border */
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 16px rgba(22, 21, 20, 0.08); /* Charcoal shadow */
+}
+
+/* Dark theme card styling */
+.dark .card {
+  background: rgba(57, 57, 55, 0.95); /* Medium charcoal */
+  border: 1px solid rgba(91, 91, 89, 0.4); /* Light charcoal border */
+  box-shadow: 0 4px 16px rgba(22, 21, 20, 0.3); /* Deeper shadow */
 }
 
 /* Subtle gradients */
 .gradient-bg {
-  background: linear-gradient(135deg, hsl(30, 40%, 98%) 0%, hsl(30, 33%, 94%) 100%);
+  background: linear-gradient(135deg, hsl(35, 100%, 97%) 0%, hsl(35, 80%, 92%) 100%);
 }
 
 .gradient-accent {
-  background: linear-gradient(135deg, hsl(39, 85%, 55%) 0%, hsl(39, 88%, 50%) 100%);
+  background: linear-gradient(135deg, hsl(16, 45%, 48%) 0%, hsl(16, 50%, 43%) 100%);
+}
+
+/* Dark theme gradients */
+.dark .gradient-bg {
+  background: linear-gradient(135deg, hsl(25, 8%, 8%) 0%, hsl(25, 8%, 15%) 100%);
+}
+
+.dark .gradient-accent {
+  background: linear-gradient(135deg, hsl(16, 50%, 58%) 0%, hsl(16, 45%, 53%) 100%);
+}
+
+/* Sage green accent elements */
+.accent-sage {
+  background: hsl(155, 35%, 58%); /* Sage green */
+  color: hsl(25, 8%, 8%); /* Dark text on sage */
+}
+
+.dark .accent-sage {
+  background: hsl(155, 40%, 68%); /* Lighter sage for dark theme */
+  color: hsl(25, 8%, 8%); /* Keep dark text for contrast */
 }
 ```
 
