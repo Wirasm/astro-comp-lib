@@ -2,6 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import ThemeToggle from '@/components/showcase/ThemeToggle.astro';
 import Button from '@/components/atoms/Button.astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <Layout title="Astro Component Library - Retro Design System">
@@ -365,6 +366,85 @@ import Button from '@/components/atoms/Button.astro';
       </div>
     </section>
 
+    <!-- Core Icons Section -->
+    <section class="section" id="icons">
+      <h2 class="mb-lg">Core Icons</h2>
+      <p class="text-muted mb-lg">
+        Key brand icons representing our design philosophy and approach
+      </p>
+
+      <div class="icons-showcase">
+        <div class="icon-group">
+          <div class="icon-example">
+            <Icon name="mdi:coffee" size={48} class="brand-icon" />
+            <div class="icon-info">
+              <h4>Coffee</h4>
+              <p class="text-muted">Approachable, human side</p>
+              <code class="icon-code">mdi:coffee</code>
+            </div>
+          </div>
+
+          <div class="icon-example">
+            <Icon name="mdi:code-tags" size={48} class="brand-icon" />
+            <div class="icon-info">
+              <h4>Code</h4>
+              <p class="text-muted">Technical expertise</p>
+              <code class="icon-code">mdi:code-tags</code>
+            </div>
+          </div>
+
+          <div class="icon-example">
+            <Icon name="mdi:target" size={48} class="brand-icon" />
+            <div class="icon-info">
+              <h4>Target</h4>
+              <p class="text-muted">Precision, results-focused</p>
+              <code class="icon-code">mdi:target</code>
+            </div>
+          </div>
+
+          <div class="icon-example">
+            <Icon name="mdi:lightbulb-on" size={48} class="brand-icon" />
+            <div class="icon-info">
+              <h4>Lightbulb</h4>
+              <p class="text-muted">Innovation, insights</p>
+              <code class="icon-code">mdi:lightbulb-on</code>
+            </div>
+          </div>
+
+          <div class="icon-example">
+            <Icon name="mdi:account-group" size={48} class="brand-icon" />
+            <div class="icon-info">
+              <h4>Users</h4>
+              <p class="text-muted">Team-focused approach</p>
+              <code class="icon-code">mdi:account-group</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="icon-sizes">
+          <h3 class="mb-md">Icon Sizes</h3>
+          <div class="size-examples">
+            <div class="size-example">
+              <Icon name="mdi:coffee" size={16} class="brand-icon" />
+              <span class="size-label">16px</span>
+            </div>
+            <div class="size-example">
+              <Icon name="mdi:coffee" size={20} class="brand-icon" />
+              <span class="size-label">20px</span>
+            </div>
+            <div class="size-example">
+              <Icon name="mdi:coffee" size={24} class="brand-icon" />
+              <span class="size-label">24px</span>
+            </div>
+            <div class="size-example">
+              <Icon name="mdi:coffee" size={32} class="brand-icon" />
+              <span class="size-label">32px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Components Section -->
     <section class="section" id="components">
       <h2 class="mb-lg">Components</h2>
@@ -598,5 +678,97 @@ import Button from '@/components/atoms/Button.astro';
 
   .component-example:has(.btn-full-width) .component-code {
     align-self: flex-start;
+  }
+
+  /* Core Icons Styles */
+  .icons-showcase {
+    display: grid;
+    gap: var(--space-2xl);
+  }
+
+  .icon-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .icon-example {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    transition: all 0.2s ease;
+  }
+
+  .icon-example:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .brand-icon {
+    color: var(--color-brand-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  .icon-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  .icon-info h4 {
+    margin: 0;
+    font-size: var(--text-body-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .icon-info p {
+    margin: 0;
+    font-size: var(--text-body-sm);
+    color: var(--color-text-muted);
+  }
+
+  .icon-code {
+    font-family: var(--font-family-mono);
+    font-size: var(--text-body-sm);
+    color: var(--color-text-muted);
+    background: var(--color-surface-elevated);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  .icon-sizes {
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .size-examples {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+  }
+
+  .size-example {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .size-label {
+    font-family: var(--font-family-mono);
+    font-size: var(--text-body-sm);
+    color: var(--color-text-muted);
   }
 </style>
