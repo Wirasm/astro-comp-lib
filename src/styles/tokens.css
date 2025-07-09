@@ -49,6 +49,42 @@
   --success-800: 155 50% 33%; /* #497c59 */
   --success-900: 155 55% 28%; /* #366842 */
 
+  /* Warning Colors - Amber */
+  --warning-50: 45 100% 95%; /* #fffaf0 */
+  --warning-100: 45 100% 88%; /* #fef3c7 */
+  --warning-200: 45 100% 78%; /* #fde68a */
+  --warning-300: 45 100% 68%; /* #fcd34d */
+  --warning-400: 45 90% 60%; /* #f59e0b */
+  --warning-500: 45 90% 55%; /* #d97706 */
+  --warning-600: 45 85% 50%; /* #b45309 */
+  --warning-700: 45 80% 45%; /* #92400e */
+  --warning-800: 45 75% 40%; /* #78350f */
+  --warning-900: 45 70% 35%; /* #451a03 */
+
+  /* Danger Colors - Red */
+  --danger-50: 0 85% 97%; /* #fef2f2 */
+  --danger-100: 0 85% 92%; /* #fee2e2 */
+  --danger-200: 0 85% 82%; /* #fecaca */
+  --danger-300: 0 85% 72%; /* #fca5a5 */
+  --danger-400: 0 80% 62%; /* #f87171 */
+  --danger-500: 0 75% 55%; /* #ef4444 */
+  --danger-600: 0 70% 50%; /* #dc2626 */
+  --danger-700: 0 65% 45%; /* #b91c1c */
+  --danger-800: 0 60% 40%; /* #991b1b */
+  --danger-900: 0 55% 35%; /* #7f1d1d */
+
+  /* Neutral Colors - Gray (for secondary) */
+  --neutral-50: 220 15% 97%; /* #f8fafc */
+  --neutral-100: 220 13% 91%; /* #e2e8f0 */
+  --neutral-200: 220 14% 83%; /* #cbd5e1 */
+  --neutral-300: 220 13% 69%; /* #94a3b8 */
+  --neutral-400: 220 9% 56%; /* #64748b */
+  --neutral-500: 220 8% 46%; /* #475569 */
+  --neutral-600: 220 12% 36%; /* #334155 */
+  --neutral-700: 220 16% 26%; /* #1e293b */
+  --neutral-800: 220 18% 20%; /* #0f172a */
+  --neutral-900: 220 20% 14%; /* #020617 */
+
   /* Typography Scale */
   --text-display: 4rem; /* 64px */
   --text-title: 3rem; /* 48px */
@@ -98,8 +134,13 @@
   --color-text-muted: hsl(var(--brand-secondary-500));
   
   --color-brand-primary: hsl(var(--brand-primary-500));
-  --color-brand-secondary: hsl(var(--accent-warm-500));
+  --color-brand-secondary: hsl(var(--neutral-500));
   --color-accent: hsl(var(--success-400));
+  
+  /* Semantic Button Colors */
+  --color-success: hsl(var(--success-500));
+  --color-warning: hsl(var(--warning-500));
+  --color-danger: hsl(var(--danger-500));
   
   --color-border: hsl(var(--accent-warm-300));
   --color-border-subtle: hsl(var(--accent-warm-200));
@@ -117,8 +158,13 @@
   --color-text-muted: hsl(var(--accent-warm-300));
   
   --color-brand-primary: hsl(var(--brand-primary-400));
-  --color-brand-secondary: hsl(var(--accent-warm-400));
+  --color-brand-secondary: hsl(var(--neutral-400));
   --color-accent: hsl(var(--success-300));
+  
+  /* Semantic Button Colors */
+  --color-success: hsl(var(--success-400));
+  --color-warning: hsl(var(--warning-400));
+  --color-danger: hsl(var(--danger-400));
   
   --color-border: hsl(var(--brand-secondary-500));
   --color-border-subtle: hsl(var(--brand-secondary-600));

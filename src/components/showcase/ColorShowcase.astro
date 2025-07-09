@@ -1,0 +1,106 @@
+---
+import type { ColorPalette } from '@/data/types';
+import { colorPalettes } from '@/data/colors';
+
+export interface Props {
+  palettes?: ColorPalette[];
+}
+
+const { palettes = colorPalettes } = Astro.props;
+---
+
+<section class="section" id="colors">
+  <h2 class="mb-lg">Color Palette</h2>
+  
+  {palettes.map((palette) => (
+    <div class="color-section">
+      <h3 class="mb-md">{palette.name}</h3>
+      
+      {palette.description && (
+        <p class="color-description mb-md">{palette.description}</p>
+      )}
+      
+      <div class="color-grid">
+        {palette.swatches.map((swatch) => (
+          <div class="color-card">
+            <div class="color-swatch" style={`background-color: ${swatch.hsl}`}></div>
+            <div class="color-info">
+              <span class="color-name">{swatch.name}</span>
+              <span class="color-value">{swatch.value}</span>
+              {swatch.description && (
+                <span class="color-desc">{swatch.description}</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</section>
+
+<style>
+  .color-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .color-description {
+    color: var(--color-text-muted);
+    font-size: var(--text-body-sm);
+  }
+
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .color-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease;
+  }
+
+  .color-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .color-swatch {
+    height: 80px;
+    width: 100%;
+  }
+
+  .color-info {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .color-name {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    font-size: var(--text-body-sm);
+  }
+
+  .color-value {
+    font-family: var(--font-family-mono);
+    font-size: var(--text-body-sm);
+    color: var(--color-text-muted);
+  }
+
+  .color-desc {
+    font-size: var(--text-caption);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .color-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+  }
+</style>

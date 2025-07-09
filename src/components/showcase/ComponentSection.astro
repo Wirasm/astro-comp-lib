@@ -1,0 +1,76 @@
+---
+import type { ComponentShowcase } from '@/data/types';
+import ComponentExample from './ComponentExample.astro';
+
+export interface Props {
+  showcase: ComponentShowcase;
+}
+
+const { showcase } = Astro.props;
+---
+
+<section class="component-section section" id={showcase.id}>
+  <h2 class="mb-lg">{showcase.name}</h2>
+  
+  {showcase.description && (
+    <p class="component-description mb-lg">{showcase.description}</p>
+  )}
+
+  {showcase.groups.map((group) => (
+    <div class="component-group">
+      <h3 class="component-group-title mb-md">{group.title}</h3>
+      
+      {group.description && (
+        <p class="component-group-description mb-sm">{group.description}</p>
+      )}
+      
+      <div class="component-grid">
+        {group.examples.map((example) => (
+          <ComponentExample 
+            example={example} 
+            componentName={showcase.component}
+          />
+        ))}
+      </div>
+    </div>
+  ))}
+</section>
+
+<style>
+  .component-section {
+    margin-bottom: var(--space-4xl);
+  }
+
+  .component-description {
+    color: var(--color-text-muted);
+    font-size: var(--text-body-lg);
+  }
+
+  .component-group {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .component-group-title {
+    font-size: var(--text-subhead);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .component-group-description {
+    color: var(--color-text-muted);
+    font-size: var(--text-body-sm);
+  }
+
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .component-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

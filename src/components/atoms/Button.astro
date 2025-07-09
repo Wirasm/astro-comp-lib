@@ -1,19 +1,17 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { validateButtonProps, type ButtonProps } from '@/lib/schemas';
 
-// Button component props
-export interface Props {
-  variant?: 'primary' | 'secondary' | 'success' | 'outline' | 'ghost';
-  size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  loading?: boolean;
-  fullWidth?: boolean;
-  type?: 'button' | 'submit' | 'reset';
-  href?: string;
-  target?: '_blank' | '_self' | '_parent' | '_top';
-  icon?: string;
-  iconPosition?: 'left' | 'right';
-  class?: string;
+// Button component props with runtime validation
+export interface Props extends ButtonProps {}
+
+// Validate props at runtime in development
+if (import.meta.env.DEV) {
+  try {
+    validateButtonProps(Astro.props);
+  } catch (error) {
+    console.error('Button props validation failed:', error);
+  }
 }
 
 const {
@@ -27,6 +25,11 @@ const {
   target,
   icon,
   iconPosition = 'left',
+  surface = 'flat',
+  motionProfile = 'respectful',
+  hapticFeedback = false,
+  shortcut,
+  intent,
   class: className = '',
 } = Astro.props;
 
@@ -39,9 +42,14 @@ const baseClasses = [
   'btn',
   `btn-${variant}`,
   `btn-${size}`,
+  `btn-surface-${surface}`,
+  `btn-motion-${motionProfile}`,
   disabled && 'btn-disabled',
   loading && 'btn-loading',
   fullWidth && 'btn-full-width',
+  hapticFeedback && 'btn-haptic',
+  shortcut && 'btn-with-shortcut',
+  intent && 'btn-with-intent',
   className,
 ]
   .filter(Boolean)
@@ -51,6 +59,7 @@ const baseClasses = [
 const hasIcon = icon && !loading;
 const showLeftIcon = hasIcon && iconPosition === 'left';
 const showRightIcon = hasIcon && iconPosition === 'right';
+const showTopIcon = hasIcon && iconPosition === 'top';
 ---
 
 <Component
@@ -60,11 +69,19 @@ const showRightIcon = hasIcon && iconPosition === 'right';
   target={isLink ? target : undefined}
   disabled={disabled || loading}
   aria-disabled={disabled || loading}
+  aria-label={intent ? intent : undefined}
+  title={intent ? intent : undefined}
+  data-shortcut={shortcut ? shortcut : undefined}
+  data-haptic={hapticFeedback ? 'true' : undefined}
 >
-  {loading && <Icon name="lucide:loader-2" class="btn-loading-icon" />}
-  {showLeftIcon && <Icon name={icon} class="btn-icon btn-icon-left" />}
-  <slot />
-  {showRightIcon && <Icon name={icon} class="btn-icon btn-icon-right" />}
+  {showTopIcon && <Icon name={icon} class="btn-icon btn-icon-top" />}
+  <div class="btn-content">
+    {loading && <Icon name="lucide:loader-2" class="btn-loading-icon" />}
+    {showLeftIcon && <Icon name={icon} class="btn-icon btn-icon-left" />}
+    <slot />
+    {showRightIcon && <Icon name={icon} class="btn-icon btn-icon-right" />}
+  </div>
+  {shortcut && <span class="btn-shortcut">{shortcut}</span>}
 </Component>
 
 <style>
@@ -93,22 +110,34 @@ const showRightIcon = hasIcon && iconPosition === 'right';
   }
 
   /* Button Sizes */
+  .btn-xs {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--text-body-sm);
+    min-height: 2rem;
+  }
+
   .btn-sm {
     padding: var(--space-xs) var(--space-md);
     font-size: var(--text-body-sm);
-    min-height: 2rem;
+    min-height: 2.5rem;
   }
 
   .btn-md {
     padding: var(--space-sm) var(--space-lg);
     font-size: var(--text-body);
-    min-height: 2.5rem;
+    min-height: 3rem;
   }
 
   .btn-lg {
     padding: var(--space-md) var(--space-xl);
     font-size: var(--text-body-lg);
-    min-height: 3rem;
+    min-height: 3.5rem;
+  }
+
+  .btn-xl {
+    padding: var(--space-lg) var(--space-2xl);
+    font-size: var(--text-body-lg);
+    min-height: 4rem;
   }
 
   /* Button Variants */
@@ -132,13 +161,13 @@ const showRightIcon = hasIcon && iconPosition === 'right';
 
   .btn-secondary {
     background-color: var(--color-brand-secondary);
-    color: var(--color-text-primary);
+    color: var(--color-background);
     border-color: var(--color-brand-secondary);
   }
 
   .btn-secondary:hover:not(.btn-disabled) {
-    background-color: hsl(var(--accent-warm-600));
-    border-color: hsl(var(--accent-warm-600));
+    background-color: hsl(var(--neutral-600));
+    border-color: hsl(var(--neutral-600));
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
   }
@@ -149,19 +178,55 @@ const showRightIcon = hasIcon && iconPosition === 'right';
   }
 
   .btn-success {
-    background-color: var(--color-accent);
-    color: var(--color-text-primary);
-    border-color: var(--color-accent);
+    background-color: var(--color-success);
+    color: var(--color-background);
+    border-color: var(--color-success);
   }
 
   .btn-success:hover:not(.btn-disabled) {
-    background-color: hsl(var(--success-500));
-    border-color: hsl(var(--success-500));
+    background-color: hsl(var(--success-600));
+    border-color: hsl(var(--success-600));
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
   }
 
   .btn-success:active:not(.btn-disabled) {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-warning {
+    background-color: var(--color-warning);
+    color: var(--color-text-primary);
+    border-color: var(--color-warning);
+  }
+
+  .btn-warning:hover:not(.btn-disabled) {
+    background-color: hsl(var(--warning-600));
+    border-color: hsl(var(--warning-600));
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-warning:active:not(.btn-disabled) {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-danger {
+    background-color: var(--color-danger);
+    color: var(--color-background);
+    border-color: var(--color-danger);
+  }
+
+  .btn-danger:hover:not(.btn-disabled) {
+    background-color: hsl(var(--danger-600));
+    border-color: hsl(var(--danger-600));
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-danger:active:not(.btn-disabled) {
     transform: translateY(0);
     box-shadow: var(--shadow-sm);
   }
@@ -215,6 +280,36 @@ const showRightIcon = hasIcon && iconPosition === 'right';
     width: 100%;
   }
 
+  /* Button Layout */
+  .btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex: 1;
+  }
+
+  .btn-shortcut {
+    font-family: var(--font-family-mono);
+    font-size: 0.75rem;
+    opacity: 0.7;
+    padding: 0.125rem 0.25rem;
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.1);
+    margin-left: var(--space-sm);
+  }
+
+  /* Top icon layout */
+  .btn:has(.btn-icon-top) {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .btn:has(.btn-icon-top) .btn-content {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
   /* Icons */
   .btn-icon {
     width: 1em;
@@ -238,6 +333,11 @@ const showRightIcon = hasIcon && iconPosition === 'right';
   }
 
   /* Size-specific icon adjustments */
+  .btn-xs .btn-icon {
+    width: 0.75em;
+    height: 0.75em;
+  }
+
   .btn-sm .btn-icon {
     width: 0.875em;
     height: 0.875em;
@@ -246,5 +346,159 @@ const showRightIcon = hasIcon && iconPosition === 'right';
   .btn-lg .btn-icon {
     width: 1.125em;
     height: 1.125em;
+  }
+
+  .btn-xl .btn-icon {
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  /* Surface Effects */
+  .btn-surface-flat {
+    box-shadow: none;
+  }
+
+  .btn-surface-glass {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  [data-theme="dark"] .btn-surface-glass {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.3),
+      0 2px 4px -1px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-surface-glass:hover:not(.btn-disabled) {
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  [data-theme="dark"] .btn-surface-glass:hover:not(.btn-disabled) {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-surface-elevated {
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-surface-elevated:hover:not(.btn-disabled) {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-2px);
+  }
+
+  .btn-surface-gradient {
+    background: linear-gradient(135deg, var(--color-brand-primary), hsl(var(--brand-primary-600)));
+    border: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-surface-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .btn-surface-gradient:hover:not(.btn-disabled)::before {
+    opacity: 1;
+  }
+
+  .btn-surface-mesh {
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.4) 1px, transparent 0);
+    background-size: 12px 12px;
+    position: relative;
+  }
+
+  [data-theme="dark"] .btn-surface-mesh {
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.2) 1px, transparent 0);
+  }
+
+  .btn-surface-mesh:hover:not(.btn-disabled) {
+    background-size: 8px 8px;
+  }
+
+  /* Motion Profiles */
+  .btn-motion-none {
+    transition: none;
+  }
+
+  .btn-motion-none:hover:not(.btn-disabled) {
+    transform: none;
+  }
+
+  .btn-motion-minimal {
+    transition: opacity 0.1s ease;
+  }
+
+  .btn-motion-minimal:hover:not(.btn-disabled) {
+    transform: none;
+    opacity: 0.8;
+  }
+
+  .btn-motion-respectful {
+    transition: all 0.2s ease;
+  }
+
+  .btn-motion-expressive {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-motion-expressive:hover:not(.btn-disabled) {
+    transform: translateY(-3px) scale(1.02);
+  }
+
+  .btn-motion-playful {
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .btn-motion-playful:hover:not(.btn-disabled) {
+    transform: translateY(-2px) rotate(1deg);
+  }
+
+  .btn-motion-playful:active:not(.btn-disabled) {
+    transform: translateY(0) rotate(-1deg);
+  }
+
+  /* Haptic Feedback Visual Indicator */
+  .btn-haptic::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 6px;
+    height: 6px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+
+  /* Responsive design */
+  @media (prefers-reduced-motion: reduce) {
+    .btn {
+      transition: none;
+    }
+    
+    .btn:hover:not(.btn-disabled) {
+      transform: none;
+    }
   }
 </style>
