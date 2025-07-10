@@ -11,33 +11,35 @@ const { examples } = Astro.props;
 
 <section class="section" id="icons">
   <h2 class="mb-lg">Core Icons</h2>
-  <p class="text-muted mb-lg">
-    Key brand icons representing our design philosophy and approach
-  </p>
+  <p class="text-muted mb-lg">Key brand icons representing our design philosophy and approach</p>
 
   <div class="icons-showcase">
     <div class="icon-group">
-      {examples.map((example) => (
-        <div class="icon-example">
-          <Icon name={example.iconName} size={48} class="brand-icon" />
-          <div class="icon-info">
-            <h4>{example.title}</h4>
-            <p class="text-muted">{example.description}</p>
-            <code class="icon-code">{example.iconName}</code>
+      {
+        examples.map((example) => (
+          <div class="icon-example">
+            <Icon name={example.iconName} size={48} class="brand-icon" />
+            <div class="icon-info">
+              <h4>{example.title}</h4>
+              <p class="text-muted">{example.description}</p>
+              <code class="icon-code">{example.iconName}</code>
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
 
     <div class="icon-sizes">
       <h3 class="mb-md">Icon Sizes</h3>
       <div class="size-examples">
-        {[16, 20, 24, 32].map((size) => (
-          <div class="size-example">
-            <Icon name="mdi:coffee" size={size} class="brand-icon" />
-            <span class="size-label">{size}px</span>
-          </div>
-        ))}
+        {
+          [16, 20, 24, 32].map((size) => (
+            <div class="size-example">
+              <Icon name="mdi:coffee" size={size} class="brand-icon" />
+              <span class="size-label">{size}px</span>
+            </div>
+          ))
+        }
       </div>
     </div>
   </div>
@@ -152,7 +154,7 @@ const { examples } = Astro.props;
     .icon-group {
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
-    
+
     .size-examples {
       justify-content: center;
     }

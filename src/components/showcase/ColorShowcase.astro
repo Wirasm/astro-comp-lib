@@ -11,31 +11,29 @@ const { palettes = colorPalettes } = Astro.props;
 
 <section class="section" id="colors">
   <h2 class="mb-lg">Color Palette</h2>
-  
-  {palettes.map((palette) => (
-    <div class="color-section">
-      <h3 class="mb-md">{palette.name}</h3>
-      
-      {palette.description && (
-        <p class="color-description mb-md">{palette.description}</p>
-      )}
-      
-      <div class="color-grid">
-        {palette.swatches.map((swatch) => (
-          <div class="color-card">
-            <div class="color-swatch" style={`background-color: ${swatch.hsl}`}></div>
-            <div class="color-info">
-              <span class="color-name">{swatch.name}</span>
-              <span class="color-value">{swatch.value}</span>
-              {swatch.description && (
-                <span class="color-desc">{swatch.description}</span>
-              )}
+
+  {
+    palettes.map((palette) => (
+      <div class="color-section">
+        <h3 class="mb-md">{palette.name}</h3>
+
+        {palette.description && <p class="color-description mb-md">{palette.description}</p>}
+
+        <div class="color-grid">
+          {palette.swatches.map((swatch) => (
+            <div class="color-card">
+              <div class="color-swatch" style={`background-color: ${swatch.hsl}`} />
+              <div class="color-info">
+                <span class="color-name">{swatch.name}</span>
+                <span class="color-value">{swatch.value}</span>
+                {swatch.description && <span class="color-desc">{swatch.description}</span>}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  ))}
+    ))
+  }
 </section>
 
 <style>

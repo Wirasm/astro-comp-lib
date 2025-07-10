@@ -3,7 +3,8 @@ import type { ComponentShowcase } from '../types';
 export const buttonShowcase: ComponentShowcase = {
   id: 'button',
   name: 'Button',
-  description: 'Versatile button component with comprehensive styling options and modern UX features',
+  description:
+    'Versatile button component with comprehensive styling options and modern UX features',
   component: 'Button',
   groups: [
     {

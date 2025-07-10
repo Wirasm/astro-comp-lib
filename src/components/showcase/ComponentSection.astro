@@ -11,29 +11,24 @@ const { showcase } = Astro.props;
 
 <section class="component-section section" id={showcase.id}>
   <h2 class="mb-lg">{showcase.name}</h2>
-  
-  {showcase.description && (
-    <p class="component-description mb-lg">{showcase.description}</p>
-  )}
 
-  {showcase.groups.map((group) => (
-    <div class="component-group">
-      <h3 class="component-group-title mb-md">{group.title}</h3>
-      
-      {group.description && (
-        <p class="component-group-description mb-sm">{group.description}</p>
-      )}
-      
-      <div class="component-grid">
-        {group.examples.map((example) => (
-          <ComponentExample 
-            example={example} 
-            componentName={showcase.component}
-          />
-        ))}
+  {showcase.description && <p class="component-description mb-lg">{showcase.description}</p>}
+
+  {
+    showcase.groups.map((group) => (
+      <div class="component-group">
+        <h3 class="component-group-title mb-md">{group.title}</h3>
+
+        {group.description && <p class="component-group-description mb-sm">{group.description}</p>}
+
+        <div class="component-grid">
+          {group.examples.map((example) => (
+            <ComponentExample example={example} componentName={showcase.component} />
+          ))}
+        </div>
       </div>
-    </div>
-  ))}
+    ))
+  }
 </section>
 
 <style>

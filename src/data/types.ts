@@ -28,7 +28,7 @@ export const ComponentShowcaseSchema = z.object({
 export const ColorSwatchSchema = z.object({
   name: z.string(),
   value: z.string(), // hex value
-  hsl: z.string(),   // hsl string
+  hsl: z.string(), // hsl string
   description: z.string().optional(),
 });
 

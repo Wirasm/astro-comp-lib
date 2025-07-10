@@ -11,32 +11,47 @@ const { example, componentName } = Astro.props;
 
 // Component mapping - add new components here as they're created
 const componentMap = {
-  'Button': Button,
-  // Add more components as needed
-  // 'Input': Input,
-  // 'Card': Card,
+  Button: Button,
 } as const;
 
 // Get the component to render
 const Component = componentMap[componentName as keyof typeof componentMap];
 
 if (!Component) {
-  throw new Error(`Component "${componentName}" not found in componentMap`);
+  throw new Error(
+    `Component "${componentName}" not found in componentMap. Available components: ${Object.keys(componentMap).join(', ')}`
+  );
 }
+
+// Components that don't use slot content (children)
+const componentsWithoutSlots: string[] = [];
+const shouldRenderChildren = !componentsWithoutSlots.includes(componentName);
+
+// Ensure props exist and have required properties
+const safeProps = example.props || {};
+
+// Type assertion for dynamic component rendering
+const DynamicComponent = Component as any;
 ---
 
 <div class="component-example">
-  <Component {...example.props}>
-    {example.label}
-  </Component>
-  
+  {
+    shouldRenderChildren ? (
+      <DynamicComponent {...safeProps}>{example.label}</DynamicComponent>
+    ) : (
+      <DynamicComponent {...safeProps} />
+    )
+  }
+
   <code class="component-code">{example.code}</code>
-  
-  {example.rgbInfo && (
-    <div class="rgb-info">
-      <small>{example.rgbInfo}</small>
-    </div>
-  )}
+
+  {
+    example.rgbInfo && (
+      <div class="rgb-info">
+        <small>{example.rgbInfo}</small>
+      </div>
+    )
+  }
 </div>
 
 <style>

@@ -14,7 +14,19 @@ export default defineConfig({
           'settings',
           'external-link',
           'arrow-up',
-          'loader-2'
+          'loader-2',
+          'sparkles',
+          'zap',
+          'layers',
+          'palette',
+          'wand-2',
+          'glass-water',
+          'layout-dashboard',
+          'folder',
+          'users',
+          'building',
+          'rocket',
+          'search'
         ],
         mdi: [
           'coffee',

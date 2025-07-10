@@ -2,7 +2,9 @@ import { z } from 'zod';
 
 // Button component schema
 export const buttonSchema = z.object({
-  variant: z.enum(['primary', 'secondary', 'success', 'warning', 'danger', 'outline', 'ghost']).optional(),
+  variant: z
+    .enum(['primary', 'secondary', 'success', 'warning', 'danger', 'outline', 'ghost'])
+    .optional(),
   size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']).optional(),
   disabled: z.boolean().optional(),
   loading: z.boolean().optional(),

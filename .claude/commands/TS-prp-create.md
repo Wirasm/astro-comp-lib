@@ -4,33 +4,37 @@
 
 Generate a complete PRP for TypeScript/JavaScript feature implementation with deep and thorough research. Ensure rich context is passed to the AI through the PRP to enable one pass implementation success through self-validation and iterative refinement.
 
+Before you start ensure that you read these key files to get an understanding about the goal of the PRP:
+PRPs/README.md
+PRPs/templates/prp-base-typescript.md
+
 The AI agent only gets the context you are appending to the PRP and its own training data. Assume the AI agent has access to the codebase and the same knowledge cutoff as you, so its important that your research findings are included or referenced in the PRP. The Agent has Websearch capabilities, so pass urls to documentation and examples.
 
 ## Research Process
 
-> During the research process, create clear tasks and spawn as many agents and subagents as needed using the batch tools. The deeper research we do here the better the PRP will be. we optimize for chance of success and not for speed.
+> During the research process, create clear tasks and spawn as many agents and subagents as needed using the batch tools. The more accurate research we do here the better the PRP will be. we optimize for chance of success and optimized context, not for speed.
 
 1. **Codebase Analysis in depth**
    - Create clear todos and spawn subagents to search the codebase for similar features/patterns Think hard and plan your approach
    - Identify all the necessary files to reference in the PRP
    - Note all existing conventions to follow (TypeScript patterns, React patterns, etc.)
    - Check existing test patterns for validation approach (Jest, Vitest, Cypress, etc.)
-   - Use the batch tools to spawn subagents to search the codebase for similar features/patterns
+   - Use the batch tools to spawn subagents to search the codebase as needed for similar features/patterns
 
 2. **External Research at scale**
-   - Create clear todos and spawn with instructions subagents to do deep research for similar features/patterns online and include urls to documentation and examples
+   - Create clear todos and spawn with instructions subagents to do research for similar features/patterns online and include urls to documentation and examples (ensure you specify todays date for each subagent task)
    - Library documentation (include specific URLs for TypeScript/JavaScript libraries)
    - For critical pieces of documentation add a .md file to PRPs/ai_docs and reference it in the PRP with clear reasoning and instructions
    - Implementation examples (GitHub/StackOverflow/blogs with TypeScript focus)
    - Best practices and common pitfalls found during research
-   - Use the batch tools to spawn subagents to search for similar features/patterns online and include urls to documentation and examples
+   - Use the batch tools to spawn subagents as needed to search for similar features/patterns online and include urls to documentation and examples
 
 3. **User Clarification**
-   - Ask for clarification if you need it
+   - Ask for clarification if you need it before you start researching and before you create the PRP.
 
-## PRP Generation
+## PRP Generation IMPORTANT
 
-Using PRPs/templates/prp_base_typescript.md as template:
+Use PRPs/templates/prp_base_typescript.md as template:
 
 ### Critical Context at minimum to Include and pass to the AI agent as part of the PRP
 
@@ -47,7 +51,9 @@ Using PRPs/templates/prp_base_typescript.md as template:
 - Include error handling strategy
 - List tasks to be completed to fulfill the PRP in the order they should be completed, use the pattern in the PRP with information dense keywords
 
-### Validation Gates (Must be Executable by the AI agent)
+### Validation Gates (Must be Executable by the AI agent using bash tools or MCP servers)
+
+Examples:
 
 ```bash
 # Type checking

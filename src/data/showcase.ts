@@ -2,113 +2,120 @@ import type { ShowcaseConfig, IconExample, TypographyExample } from './types';
 import { colorPalettes } from './colors';
 import { buttonShowcase } from './components/button';
 
-// Typography examples extracted from current index.astro
+// Modern typography examples with fluid scaling
 export const typographyExamples: TypographyExample[] = [
   {
     tag: 'h1',
     label: 'Display Heading',
-    cssVar: '--text-display',
-    size: '4rem (64px)',
+    cssVar: '--text-6xl',
+    size: 'clamp(3.75rem, 3rem + 3.75vw, 5rem)',
     content: 'Display Heading',
   },
   {
     tag: 'h2',
     label: 'Title Heading',
-    cssVar: '--text-title',
-    size: '3rem (48px)',
+    cssVar: '--text-5xl',
+    size: 'clamp(3rem, 2.5rem + 2.5vw, 4rem)',
     content: 'Title Heading',
   },
   {
     tag: 'h3',
     label: 'Headline',
-    cssVar: '--text-headline',
-    size: '2.25rem (36px)',
+    cssVar: '--text-4xl',
+    size: 'clamp(2.25rem, 1.9rem + 1.75vw, 3.125rem)',
     content: 'Headline',
   },
   {
     tag: 'h4',
     label: 'Subheading',
-    cssVar: '--text-subhead',
-    size: '1.5rem (24px)',
+    cssVar: '--text-2xl',
+    size: 'clamp(1.5rem, 1.3rem + 1vw, 2rem)',
     content: 'Subheading',
   },
   {
     tag: 'p',
     label: 'Large body text',
-    cssVar: '--text-body-lg',
-    size: '1.125rem (18px)',
+    cssVar: '--text-lg',
+    size: 'clamp(1.125rem, 1rem + 0.625vw, 1.375rem)',
     content: 'Large body text for emphasis and readability.',
   },
   {
     tag: 'p',
     label: 'Regular body text',
-    cssVar: '--text-body',
-    size: '1rem (16px)',
+    cssVar: '--text-base',
+    size: 'clamp(1rem, 0.9rem + 0.5vw, 1.125rem)',
     content: 'Regular body text for most content and descriptions.',
   },
   {
     tag: 'p',
     label: 'Small text',
-    cssVar: '--text-body-sm',
-    size: '0.875rem (14px)',
+    cssVar: '--text-sm',
+    size: 'clamp(0.875rem, 0.8rem + 0.375vw, 1rem)',
     content: 'Small text for captions and secondary information.',
   },
   {
     tag: 'p',
     label: 'Caption text',
-    cssVar: '--text-caption',
-    size: '0.75rem (12px)',
+    cssVar: '--text-xs',
+    size: 'clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem)',
     content: 'Caption text for labels and metadata.',
   },
   {
     tag: 'code',
     label: 'Code snippet',
-    cssVar: '--text-code',
-    size: '0.875rem (14px)',
+    cssVar: '--text-sm',
+    size: 'clamp(0.875rem, 0.8rem + 0.375vw, 1rem)',
     content: 'code snippet',
   },
 ];
 
-// Core icons extracted from current index.astro
+// Modern icons with lucide icon set
 export const coreIcons: IconExample[] = [
   {
-    name: 'coffee',
-    title: 'Coffee',
-    description: 'Approachable, human side',
-    iconName: 'mdi:coffee',
+    name: 'sparkles',
+    title: 'Sparkles',
+    description: 'Innovation and magic',
+    iconName: 'lucide:sparkles',
     sizes: [16, 20, 24, 32, 48],
   },
   {
-    name: 'code',
-    title: 'Code',
-    description: 'Technical expertise',
-    iconName: 'mdi:code-tags',
+    name: 'zap',
+    title: 'Zap',
+    description: 'Energy and performance',
+    iconName: 'lucide:zap',
   },
   {
-    name: 'target',
-    title: 'Target',
-    description: 'Precision, results-focused',
-    iconName: 'mdi:target',
+    name: 'layers',
+    title: 'Layers',
+    description: 'Depth and structure',
+    iconName: 'lucide:layers',
   },
   {
-    name: 'lightbulb',
-    title: 'Lightbulb',
-    description: 'Innovation, insights',
-    iconName: 'mdi:lightbulb-on',
+    name: 'palette',
+    title: 'Palette',
+    description: 'Design and creativity',
+    iconName: 'lucide:palette',
   },
   {
-    name: 'users',
-    title: 'Users',
-    description: 'Team-focused approach',
-    iconName: 'mdi:account-group',
+    name: 'wand',
+    title: 'Magic Wand',
+    description: 'Transformation and effects',
+    iconName: 'lucide:wand-2',
+  },
+  {
+    name: 'glass',
+    title: 'Glass',
+    description: 'Transparency and depth',
+    iconName: 'lucide:glass-water',
   },
 ];
 
 // Main showcase configuration
 export const showcaseConfig: ShowcaseConfig = {
   site: {
-    title: 'Astro Component Library',
-    description: 'Claude Code vs Gemeni CLI showdown',
+    title: 'Modern Astro Component Library',
+    description:
+      'Claude Code VS Gemini CLI - The ultimate component showdown using PRP',
   },
   sections: {
     colors: colorPalettes,
@@ -119,6 +126,7 @@ export const showcaseConfig: ShowcaseConfig = {
       // Add more components here as they're created
       // inputShowcase,
       // cardShowcase,
+      // navigationShowcase,
       // modalShowcase,
     ],
   },

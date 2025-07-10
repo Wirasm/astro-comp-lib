@@ -8,26 +8,27 @@ import ComponentSection from '@/components/showcase/ComponentSection.astro';
 import { showcaseConfig } from '@/data/showcase';
 ---
 
-<Layout title="Astro Component Library - Retro Design System">
+<Layout title="Astro Component Library - Modern Design System">
   <main class="container">
     <ThemeToggle />
 
     <!-- Header -->
     <header class="header">
       <h1 class="text-center mb-md">{showcaseConfig.site.title}</h1>
-      <p class="text-center text-muted mb-lg">{showcaseConfig.site.description}</p>
+      <p class="subtitle text-center text-muted mb-lg">{showcaseConfig.site.description}</p>
     </header>
 
     <!-- Data-driven sections -->
     <ColorShowcase palettes={showcaseConfig.sections.colors} />
     <TypographyShowcase examples={showcaseConfig.sections.typography} />
     <IconShowcase examples={showcaseConfig.sections.icons} />
-    
-    <!-- Dynamic component sections -->
-    {showcaseConfig.sections.components.map((component) => (
-      <ComponentSection showcase={component} />
-    ))}
 
+    <!-- Dynamic component sections -->
+    {
+      showcaseConfig.sections.components.map((component) => (
+        <ComponentSection showcase={component} />
+      ))
+    }
   </main>
 </Layout>
 
@@ -38,6 +39,14 @@ import { showcaseConfig } from '@/data/showcase';
 
   .text-center {
     text-align: center;
+  }
+
+  .subtitle {
+    text-align: center !important;
+    max-width: none !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
   }
 
   .text-muted {
