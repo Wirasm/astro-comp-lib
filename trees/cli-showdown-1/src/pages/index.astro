@@ -1,0 +1,202 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ThemeToggle from '@/components/showcase/ThemeToggle.astro';
+import Navigation from '@/components/organisms/Navigation.astro';
+import Hero from '@/components/organisms/Hero.astro';
+import About from '@/components/organisms/About.astro';
+import Pricing from '@/components/organisms/Pricing.astro';
+import Testimonials from '@/components/organisms/Testimonials.astro';
+import Contact from '@/components/organisms/Contact.astro';
+
+const navItems = [
+  { label: 'Home', href: '/', isActive: true },
+  { label: 'Components', href: '/components' },
+  { label: 'About', href: '#about' },
+  { label: 'Pricing', href: '#pricing' },
+  { label: 'Contact', href: '#contact' },
+];
+
+const pricingPlans = [
+  {
+    name: 'Starter',
+    price: '$0',
+    description: 'Perfect for trying out our components',
+    features: [
+      'Access to core components',
+      'Basic documentation',
+      'Community support',
+      'MIT License',
+    ],
+    ctaText: 'Get Started Free',
+    ctaHref: '/components',
+  },
+  {
+    name: 'Professional',
+    price: '$49',
+    period: 'one-time',
+    description: 'Everything you need for production',
+    features: [
+      'All components included',
+      'Advanced documentation',
+      'Priority support',
+      'TypeScript definitions',
+      'Lifetime updates',
+      'Custom themes',
+    ],
+    ctaText: 'Buy Now',
+    ctaHref: '#',
+    featured: true,
+  },
+  {
+    name: 'Team',
+    price: '$199',
+    period: 'one-time',
+    description: 'For teams building at scale',
+    features: [
+      'Everything in Pro',
+      'Team license (up to 10)',
+      'Private Discord channel',
+      'Custom components',
+      'Code reviews',
+      'Architecture consulting',
+    ],
+    ctaText: 'Contact Sales',
+    ctaHref: '#contact',
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      'The best component library I have ever used. The glass morphism effects are stunning and the performance is incredible.',
+    author: 'Sarah Johnson',
+    role: 'Senior Developer',
+    company: 'TechCorp',
+    rating: 5,
+    image: 'https://i.pravatar.cc/150?img=1',
+  },
+  {
+    quote:
+      'These components saved us months of development time. The TypeScript support and accessibility features are top-notch.',
+    author: 'Mike Chen',
+    role: 'Tech Lead',
+    company: 'StartupXYZ',
+    rating: 5,
+    image: 'https://i.pravatar.cc/150?img=8',
+  },
+  {
+    quote:
+      'Beautiful design, clean code, and amazing documentation. This is how component libraries should be built.',
+    author: 'Emma Davis',
+    role: 'Frontend Architect',
+    company: 'DesignStudio',
+    rating: 5,
+    image: 'https://i.pravatar.cc/150?img=5',
+  },
+];
+
+const contactFields = [
+  {
+    name: 'name',
+    label: 'Your Name',
+    type: 'text' as const,
+    required: true,
+    placeholder: 'John Doe',
+  },
+  {
+    name: 'email',
+    label: 'Email Address',
+    type: 'email' as const,
+    required: true,
+    placeholder: 'john@example.com',
+  },
+  {
+    name: 'company',
+    label: 'Company',
+    type: 'text' as const,
+    placeholder: 'Optional',
+  },
+  {
+    name: 'message',
+    label: 'How can we help?',
+    type: 'textarea' as const,
+    required: true,
+    placeholder: 'Tell us about your project...',
+  },
+];
+---
+
+<Layout title="Astro Component Library - Modern UI Components">
+  <ThemeToggle />
+
+  <!-- Fixed Navigation -->
+  <Navigation items={navItems} variant="glass" fixed />
+
+  <!-- Hero Section -->
+  <Hero
+    title="Build Beautiful UIs Faster"
+    subtitle="A modern component library for Astro with glass morphism effects, TypeScript support, and zero JavaScript by default."
+    ctaText="Explore Components"
+    ctaHref="/components"
+    secondaryCtaText="View on GitHub"
+    secondaryCtaHref="https://github.com"
+    variant="center"
+    surface="mesh"
+  />
+
+  <!-- About Section -->
+  <section id="about">
+    <About
+      title="Why Choose Our Components?"
+      subtitle="Built with modern web standards and best practices"
+      content="Our component library combines the power of Astro's static site generation with beautiful, accessible components. Every component is crafted with attention to detail, performance, and developer experience. With TypeScript support, comprehensive documentation, and zero JavaScript by default, you can build faster without sacrificing quality."
+      stats={[
+        { label: 'Components', value: '50+' },
+        { label: 'TypeScript', value: '100%' },
+        { label: 'Bundle Size', value: '<100KB' },
+        { label: 'Lighthouse Score', value: '100' },
+      ]}
+      variant="centered"
+    />
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing">
+    <Pricing
+      title="Simple, Transparent Pricing"
+      subtitle="Choose the plan that fits your needs"
+      plans={pricingPlans}
+    />
+  </section>
+
+  <!-- Testimonials Section -->
+  <Testimonials
+    title="Loved by Developers"
+    subtitle="See what others are saying about our components"
+    testimonials={testimonials}
+    variant="cards"
+  />
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <Contact
+      title="Ready to Get Started?"
+      subtitle="Have questions? We're here to help you succeed."
+      fields={contactFields}
+      submitText="Send Message"
+      variant="default"
+    />
+  </section>
+</Layout>
+
+<style>
+  /* Add spacing for fixed navigation */
+  :global(body) {
+    padding-top: 4rem;
+  }
+
+  /* Smooth scroll padding for anchor links */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+</style>

@@ -1,0 +1,152 @@
+---
+export interface Props {
+  label: string;
+  href: string;
+  isActive?: boolean | undefined;
+  class?: string | undefined;
+}
+
+const { label, href, isActive = false, class: className = '' } = Astro.props;
+
+// Build classes
+const baseClasses = ['nav-link', isActive && 'nav-link--active', className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<a href={href} class={baseClasses} aria-current={isActive ? 'page' : undefined}>
+  {label}
+</a>
+
+<style>
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-family-sans);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    isolation: isolate;
+    user-select: none;
+  }
+
+  /* Hover state */
+  .nav-link:hover {
+    color: var(--color-text-primary);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-subtle);
+    -webkit-backdrop-filter: var(--glass-subtle);
+    transform: translateY(-1px);
+  }
+
+  /* Active state */
+  .nav-link--active {
+    color: var(--color-brand-primary);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-subtle);
+    -webkit-backdrop-filter: var(--glass-subtle);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      0 1px 3px 0 rgb(0 0 0 / 0.05),
+      inset 0 1px 0 var(--glass-highlight);
+  }
+
+  .nav-link--active:hover {
+    color: var(--color-brand-primary);
+    transform: none;
+  }
+
+  /* Active indicator */
+  .nav-link--active::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: var(--space-md);
+    right: var(--space-md);
+    height: 2px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    opacity: 1;
+    transform: scaleX(1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Focus styles */
+  .nav-link:focus-visible {
+    outline: 2px solid var(--color-brand-primary);
+    outline-offset: 2px;
+    box-shadow:
+      0 0 0 2px var(--color-brand-primary),
+      0 0 20px rgba(59, 130, 246, 0.4);
+  }
+
+  /* Press state */
+  .nav-link:active {
+    transform: scale(0.98);
+  }
+
+  /* Dark mode adjustments */
+  [data-theme='dark'] .nav-link {
+    color: var(--color-text-secondary);
+  }
+
+  [data-theme='dark'] .nav-link:hover {
+    color: var(--color-text-primary);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  [data-theme='dark'] .nav-link--active {
+    color: var(--color-brand-primary);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Responsive design and accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .nav-link {
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      transform: none;
+    }
+
+    .nav-link:active {
+      transform: none;
+    }
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .nav-link {
+      padding: var(--space-md) var(--space-lg);
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .nav-link {
+      border: 1px solid transparent;
+    }
+
+    .nav-link:hover {
+      border-color: currentColor;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .nav-link--active {
+      border-color: currentColor;
+      border-width: 2px;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+  }
+</style>

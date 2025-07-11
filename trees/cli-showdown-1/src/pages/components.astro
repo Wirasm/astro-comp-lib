@@ -1,0 +1,163 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ThemeToggle from '@/components/showcase/ThemeToggle.astro';
+import ColorShowcase from '@/components/showcase/ColorShowcase.astro';
+import TypographyShowcase from '@/components/showcase/TypographyShowcase.astro';
+import IconShowcase from '@/components/showcase/IconShowcase.astro';
+import ComponentSection from '@/components/showcase/ComponentSection.astro';
+import Navigation from '@/components/organisms/Navigation.astro';
+import { showcaseConfig } from '@/data/showcase';
+
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Components', href: '/components', isActive: true },
+];
+---
+
+<Layout title="Components - Astro Component Library">
+  <Navigation items={navItems} variant="glass" fixed />
+
+  <main class="container">
+    <ThemeToggle />
+
+    <!-- Header -->
+    <header class="header">
+      <h1 class="text-center mb-md">Component Showcase</h1>
+      <p class="subtitle text-center text-muted mb-lg">
+        Explore our complete collection of modern, accessible components
+      </p>
+    </header>
+
+    <!-- Design System Foundation -->
+    <section class="section">
+      <h2 class="section-title">Design System Foundation</h2>
+      <ColorShowcase palettes={showcaseConfig.sections.colors} />
+      <TypographyShowcase examples={showcaseConfig.sections.typography} />
+      <IconShowcase examples={showcaseConfig.sections.icons} />
+    </section>
+
+    <!-- Components by Category -->
+    <section class="section">
+      <h2 class="section-title">Components</h2>
+
+      <!-- Atoms -->
+      <div class="component-category">
+        <h3 class="category-title">Atoms</h3>
+        <p class="category-description">Basic building blocks of our design system</p>
+        {
+          showcaseConfig.sections.components
+            .filter((comp) => ['button', 'badge'].includes(comp.id))
+            .map((component) => <ComponentSection showcase={component} />)
+        }
+      </div>
+
+      <!-- Molecules -->
+      <div class="component-category">
+        <h3 class="category-title">Molecules</h3>
+        <p class="category-description">Composite components built from atoms</p>
+        {
+          showcaseConfig.sections.components
+            .filter((comp) => ['card'].includes(comp.id))
+            .map((component) => <ComponentSection showcase={component} />)
+        }
+      </div>
+
+      <!-- Organisms -->
+      <div class="component-category">
+        <h3 class="category-title">Organisms</h3>
+        <p class="category-description">Complex components for complete sections</p>
+        {
+          showcaseConfig.sections.components
+            .filter((comp) =>
+              ['navigation', 'hero', 'pricing', 'testimonials', 'about', 'contact'].includes(
+                comp.id
+              )
+            )
+            .map((component) => <ComponentSection showcase={component} />)
+        }
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .container {
+    padding-top: 6rem; /* Account for fixed navigation */
+  }
+
+  .header {
+    padding: var(--space-2xl) 0;
+  }
+
+  .section {
+    padding: var(--space-2xl) 0;
+  }
+
+  .section-title {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-xl);
+    text-align: center;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .component-category {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .category-title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-sm);
+    color: var(--color-text-primary);
+  }
+
+  .category-description {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xl);
+    max-width: 65ch;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .subtitle {
+    text-align: center !important;
+    max-width: none !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  .text-muted {
+    color: var(--color-text-muted);
+  }
+
+  .mb-md {
+    margin-bottom: var(--space-md);
+  }
+
+  .mb-lg {
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    .container {
+      padding-top: 5rem;
+    }
+
+    .section-title {
+      font-size: var(--text-2xl);
+    }
+
+    .category-title {
+      font-size: var(--text-xl);
+    }
+  }
+</style>

@@ -1,0 +1,162 @@
+---
+import type { IconExample } from '@/data/types';
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  examples: IconExample[];
+}
+
+const { examples } = Astro.props;
+---
+
+<section class="section" id="icons">
+  <h2 class="mb-lg">Core Icons</h2>
+  <p class="text-muted mb-lg">Key brand icons representing our design philosophy and approach</p>
+
+  <div class="icons-showcase">
+    <div class="icon-group">
+      {
+        examples.map((example) => (
+          <div class="icon-example">
+            <Icon name={example.iconName} size={48} class="brand-icon" />
+            <div class="icon-info">
+              <h4>{example.title}</h4>
+              <p class="text-muted">{example.description}</p>
+              <code class="icon-code">{example.iconName}</code>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="icon-sizes">
+      <h3 class="mb-md">Icon Sizes</h3>
+      <div class="size-examples">
+        {
+          [16, 20, 24, 32].map((size) => (
+            <div class="size-example">
+              <Icon name="mdi:coffee" size={size} class="brand-icon" />
+              <span class="size-label">{size}px</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .icons-showcase {
+    display: grid;
+    gap: var(--space-2xl);
+  }
+
+  .icon-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .icon-example {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    transition: all 0.2s ease;
+  }
+
+  .icon-example:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .brand-icon {
+    color: var(--color-brand-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  .icon-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  .icon-info h4 {
+    margin: 0;
+    font-size: var(--text-body-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .icon-info p {
+    margin: 0;
+    font-size: var(--text-body-sm);
+    color: var(--color-text-muted);
+  }
+
+  .icon-code {
+    font-family: var(--font-family-mono);
+    font-size: var(--text-body-sm);
+    color: var(--color-text-muted);
+    background: var(--color-surface-elevated);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  .icon-sizes {
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .size-examples {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+  }
+
+  .size-example {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .size-label {
+    font-family: var(--font-family-mono);
+    font-size: var(--text-body-sm);
+    color: var(--color-text-muted);
+  }
+
+  .text-muted {
+    color: var(--color-text-muted);
+  }
+
+  .mb-lg {
+    margin-bottom: var(--space-lg);
+  }
+
+  .mb-md {
+    margin-bottom: var(--space-md);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .icon-group {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .size-examples {
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,0 +1,145 @@
+---
+// Theme toggle component for switching between light and dark themes
+---
+
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+  <div class="theme-toggle-backdrop"></div>
+  <span class="theme-toggle-icon" data-theme="light">☀️</span>
+  <span class="theme-toggle-icon" data-theme="dark">🌙</span>
+</button>
+
+<style>
+  .theme-toggle {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 9999;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    padding: var(--space-sm);
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .theme-toggle-backdrop {
+    position: absolute;
+    inset: 0;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-medium);
+    border-radius: inherit;
+    transition: all 0.3s ease;
+  }
+
+  .theme-toggle:hover {
+    box-shadow:
+      var(--shadow-xl),
+      0 0 20px rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px) scale(1.05);
+    border-color: var(--color-brand-primary);
+  }
+
+  .theme-toggle:hover .theme-toggle-backdrop {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-intense);
+  }
+
+  .theme-toggle-icon {
+    font-size: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+
+  .theme-toggle-icon[data-theme='light'] {
+    opacity: 1;
+  }
+
+  .theme-toggle-icon[data-theme='dark'] {
+    opacity: 0;
+    position: absolute;
+  }
+
+  [data-theme='dark'] .theme-toggle-icon[data-theme='light'] {
+    opacity: 0;
+  }
+
+  [data-theme='dark'] .theme-toggle-icon[data-theme='dark'] {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  // Theme management utilities - inline to avoid import issues
+  const THEME_KEY = 'theme';
+  const THEME_ATTRIBUTE = 'data-theme';
+
+  // Get the current theme from localStorage or system preference
+  function getTheme(): 'light' | 'dark' {
+    if (typeof window === 'undefined') return 'light';
+
+    const stored = localStorage.getItem(THEME_KEY);
+    if (stored === 'light' || stored === 'dark') {
+      return stored;
+    }
+
+    // Check system preference
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    return mediaQuery.matches ? 'dark' : 'light';
+  }
+
+  // Set theme and update DOM and localStorage
+  function setTheme(theme: 'light' | 'dark'): void {
+    if (typeof window === 'undefined') return;
+
+    document.documentElement.setAttribute(THEME_ATTRIBUTE, theme);
+    localStorage.setItem(THEME_KEY, theme);
+  }
+
+  // Toggle between themes
+  function toggleTheme(): 'light' | 'dark' {
+    const currentTheme = getTheme();
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    return newTheme;
+  }
+
+  // Initialize theme on page load
+  function initTheme(): void {
+    if (typeof window === 'undefined') return;
+
+    const theme = getTheme();
+    setTheme(theme);
+
+    // Listen for system preference changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', (e) => {
+      const stored = localStorage.getItem(THEME_KEY);
+      if (!stored) {
+        setTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+  }
+
+  // Initialize theme on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+
+    // Add click handler for theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        toggleTheme();
+      });
+    }
+  });
+</script>

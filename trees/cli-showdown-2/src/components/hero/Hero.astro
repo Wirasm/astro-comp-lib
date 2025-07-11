@@ -1,0 +1,73 @@
+---
+import { validateHeroProps, type HeroProps } from '@/lib/schemas';
+import Button from '../atoms/Button.astro';
+
+export interface Props extends HeroProps {}
+
+if (import.meta.env.DEV) {
+  try {
+    validateHeroProps(Astro.props);
+  } catch (error) {
+    console.error('Hero props validation failed:', error);
+  }
+}
+
+const { title, subtitle, ctaButtons } = Astro.props;
+---
+
+<section class="hero">
+  <div class="hero-content">
+    {title && <h1 class="hero-title">{title}</h1>}
+    {subtitle && <p class="hero-subtitle">{subtitle}</p>}
+    {
+      ctaButtons && ctaButtons.length > 0 && (
+        <div class="hero-buttons">
+          {ctaButtons.map((button) => (
+            <Button {...button}>{button.label}</Button>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-4xl) var(--space-lg);
+    background: var(--gradient-hero);
+    color: var(--color-text-on-brand);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-3xl);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .hero-content {
+    max-width: 800px;
+  }
+
+  .hero-title {
+    font-size: var(--text-6xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--space-md);
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-lg);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--space-2xl);
+    opacity: 0.9;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

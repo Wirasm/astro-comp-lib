@@ -1,0 +1,97 @@
+---
+import type { TypographyExample } from '@/data/types';
+
+export interface Props {
+  examples: TypographyExample[];
+}
+
+const { examples } = Astro.props;
+---
+
+<section class="section" id="typography">
+  <h2 class="mb-lg">Typography</h2>
+
+  <div class="typography-showcase">
+    {
+      examples.map((example) => (
+        <div class="typography-example">
+          {example.tag === 'h1' && <h1 set:html={example.content} />}
+          {example.tag === 'h2' && <h2 set:html={example.content} />}
+          {example.tag === 'h3' && <h3 set:html={example.content} />}
+          {example.tag === 'h4' && <h4 set:html={example.content} />}
+          {example.tag === 'p' && example.cssVar === '--text-body-lg' && (
+            <p class="text-lg" set:html={example.content} />
+          )}
+          {example.tag === 'p' && example.cssVar === '--text-body' && (
+            <p set:html={example.content} />
+          )}
+          {example.tag === 'p' && example.cssVar === '--text-body-sm' && (
+            <p class="text-sm" set:html={example.content} />
+          )}
+          {example.tag === 'p' && example.cssVar === '--text-caption' && (
+            <p class="text-caption" set:html={example.content} />
+          )}
+          {example.tag === 'code' && (
+            <code class="bg-surface-elevated p-sm rounded" set:html={example.content} />
+          )}
+
+          <p class="typography-meta font-mono text-sm text-muted">
+            {example.cssVar}: {example.size}
+          </p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .typography-showcase {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .typography-example {
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .typography-meta {
+    margin-top: var(--space-md);
+    opacity: 0.8;
+  }
+
+  .text-caption {
+    font-size: var(--text-caption);
+    color: var(--color-text-muted);
+  }
+
+  .text-lg {
+    font-size: var(--text-body-lg);
+  }
+
+  .text-sm {
+    font-size: var(--text-body-sm);
+  }
+
+  .bg-surface-elevated {
+    background-color: var(--color-surface-elevated);
+  }
+
+  .p-sm {
+    padding: var(--space-sm);
+  }
+
+  .rounded {
+    border-radius: var(--radius-md);
+  }
+
+  .font-mono {
+    font-family: var(--font-family-mono);
+  }
+
+  .text-muted {
+    color: var(--color-text-muted);
+  }
+</style>

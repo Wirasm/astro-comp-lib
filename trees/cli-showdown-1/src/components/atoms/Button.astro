@@ -1,0 +1,670 @@
+---
+import { Icon } from 'astro-icon/components';
+import { validateButtonProps, type ButtonProps } from '@/lib/schemas';
+
+// Button component props with runtime validation
+export interface Props extends ButtonProps {}
+
+// Validate props at runtime in development
+if (import.meta.env.DEV) {
+  try {
+    validateButtonProps(Astro.props);
+  } catch (error) {
+    console.error('Button props validation failed:', error);
+  }
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  disabled = false,
+  loading = false,
+  fullWidth = false,
+  type = 'button',
+  href,
+  target,
+  icon,
+  iconPosition = 'left',
+  surface = 'flat',
+  motionProfile = 'respectful',
+  hapticFeedback = false,
+  shortcut,
+  intent,
+  class: className = '',
+} = Astro.props;
+
+// Determine if this should be a link or button
+const isLink = href && !disabled;
+const Component = isLink ? 'a' : 'button';
+
+// Build classes
+const baseClasses = [
+  'btn',
+  `btn-${variant}`,
+  `btn-${size}`,
+  `btn-surface-${surface}`,
+  `btn-motion-${motionProfile}`,
+  disabled && 'btn-disabled',
+  loading && 'btn-loading',
+  fullWidth && 'btn-full-width',
+  hapticFeedback && 'btn-haptic',
+  shortcut && 'btn-with-shortcut',
+  intent && 'btn-with-intent',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+
+// Button content with icon support
+const hasIcon = icon && !loading;
+const showLeftIcon = hasIcon && iconPosition === 'left';
+const showRightIcon = hasIcon && iconPosition === 'right';
+const showTopIcon = hasIcon && iconPosition === 'top';
+---
+
+<Component
+  class={baseClasses}
+  type={isLink ? undefined : type}
+  href={isLink ? href : undefined}
+  target={isLink ? target : undefined}
+  disabled={disabled || loading}
+  aria-disabled={disabled || loading}
+  aria-label={intent ? intent : undefined}
+  title={intent ? intent : undefined}
+  data-shortcut={shortcut ? shortcut : undefined}
+  data-haptic={hapticFeedback ? 'true' : undefined}
+>
+  <div class="btn-glow"></div>
+  <div class="btn-ripple-container">
+    <div class="btn-ripple"></div>
+  </div>
+  {showTopIcon && <Icon name={icon} class="btn-icon btn-icon-top" />}
+  <div class="btn-content">
+    {loading && <Icon name="lucide:loader-2" class="btn-loading-icon" />}
+    {showLeftIcon && <Icon name={icon} class="btn-icon btn-icon-left" />}
+    <slot />
+    {showRightIcon && <Icon name={icon} class="btn-icon btn-icon-right" />}
+  </div>
+  {shortcut && <span class="btn-shortcut">{shortcut}</span>}
+  <div class="btn-shine"></div>
+</Component>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-family: var(--font-family-sans);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-none);
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+    will-change: transform;
+    isolation: isolate;
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--color-brand-primary);
+    outline-offset: 2px;
+    box-shadow:
+      0 0 0 2px var(--color-brand-primary),
+      0 0 20px rgba(59, 130, 246, 0.4),
+      var(--shadow-lg);
+  }
+
+  /* Button Sizes */
+  .btn-xs {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--text-body-sm);
+    min-height: 2rem;
+  }
+
+  .btn-sm {
+    padding: var(--space-xs) var(--space-md);
+    font-size: var(--text-body-sm);
+    min-height: 2.5rem;
+  }
+
+  .btn-md {
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--text-body);
+    min-height: 3rem;
+  }
+
+  .btn-lg {
+    padding: var(--space-md) var(--space-xl);
+    font-size: var(--text-body-lg);
+    min-height: 3.5rem;
+  }
+
+  .btn-xl {
+    padding: var(--space-lg) var(--space-2xl);
+    font-size: var(--text-body-lg);
+    min-height: 4rem;
+  }
+
+  /* Modern Button Variants */
+  .btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+      var(--shadow-primary),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-primary:hover:not(.btn-disabled) {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      var(--shadow-primary),
+      0 12px 48px rgba(59, 130, 246, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .btn-primary:active:not(.btn-disabled) {
+    transform: translateY(-1px) scale(1.01);
+    box-shadow:
+      var(--shadow-primary),
+      0 8px 32px rgba(59, 130, 246, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-secondary {
+    background: var(--gradient-secondary);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+      var(--shadow-secondary),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-secondary:hover:not(.btn-disabled) {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      var(--shadow-secondary),
+      0 12px 48px rgba(139, 92, 246, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .btn-secondary:active:not(.btn-disabled) {
+    transform: translateY(-1px) scale(1.01);
+    box-shadow:
+      var(--shadow-secondary),
+      0 8px 32px rgba(139, 92, 246, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-success {
+    background: var(--gradient-success);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+      var(--shadow-success),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-success:hover:not(.btn-disabled) {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      var(--shadow-success),
+      0 12px 48px rgba(16, 185, 129, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .btn-success:active:not(.btn-disabled) {
+    transform: translateY(-1px) scale(1.01);
+    box-shadow:
+      var(--shadow-success),
+      0 8px 32px rgba(16, 185, 129, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-warning {
+    background: var(--gradient-warning);
+    color: var(--color-text-primary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow:
+      var(--shadow-warning),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-warning:hover:not(.btn-disabled) {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      var(--shadow-warning),
+      0 12px 48px rgba(245, 158, 11, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .btn-warning:active:not(.btn-disabled) {
+    transform: translateY(-1px) scale(1.01);
+    box-shadow:
+      var(--shadow-warning),
+      0 8px 32px rgba(245, 158, 11, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-danger {
+    background: var(--gradient-danger);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+      var(--shadow-danger),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-danger:hover:not(.btn-disabled) {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      var(--shadow-danger),
+      0 12px 48px rgba(244, 63, 94, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .btn-danger:active:not(.btn-disabled) {
+    transform: translateY(-1px) scale(1.01);
+    box-shadow:
+      var(--shadow-danger),
+      0 8px 32px rgba(244, 63, 94, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-outline {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-subtle);
+    color: var(--color-brand-primary);
+    border: 1px solid var(--color-brand-primary);
+    box-shadow:
+      var(--shadow-lg),
+      inset 0 1px 0 var(--glass-highlight);
+  }
+
+  .btn-outline:hover:not(.btn-disabled) {
+    background: var(--gradient-primary);
+    color: white;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      var(--shadow-primary),
+      0 12px 48px rgba(59, 130, 246, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .btn-outline:active:not(.btn-disabled) {
+    transform: translateY(-1px) scale(1.01);
+    box-shadow:
+      var(--shadow-primary),
+      0 8px 32px rgba(59, 130, 246, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text-primary);
+    border: 1px solid transparent;
+  }
+
+  .btn-ghost:hover:not(.btn-disabled) {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-subtle);
+    color: var(--color-text-primary);
+    border: 1px solid var(--glass-border);
+    transform: translateY(-1px);
+    box-shadow:
+      var(--shadow-md),
+      inset 0 1px 0 var(--glass-highlight);
+  }
+
+  .btn-ghost:active:not(.btn-disabled) {
+    transform: translateY(0);
+    background: var(--glass-bg);
+    box-shadow:
+      var(--shadow-sm),
+      inset 0 1px 0 var(--glass-highlight);
+  }
+
+  /* Button States */
+  .btn-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .btn-loading {
+    cursor: wait;
+  }
+
+  .btn-full-width {
+    width: 100%;
+  }
+
+  /* Enhanced Button Layout */
+  .btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex: 1;
+    position: relative;
+    z-index: 2;
+  }
+
+  .btn-shortcut {
+    font-family: var(--font-family-mono);
+    font-size: var(--text-xs);
+    opacity: 0.8;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-md);
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(4px);
+    margin-left: var(--space-sm);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Top icon layout */
+  .btn:has(.btn-icon-top) {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .btn:has(.btn-icon-top) .btn-content {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  /* Icons */
+  .btn-icon {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  .btn-loading-icon {
+    width: 1em;
+    height: 1em;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Modern Button Effects */
+  .btn-glow {
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    filter: blur(8px);
+    z-index: -1;
+  }
+
+  .btn:hover:not(.btn-disabled) .btn-glow {
+    opacity: 0.6;
+  }
+
+  .btn-ripple-container {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .btn-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    pointer-events: none;
+  }
+
+  .btn:active:not(.btn-disabled) .btn-ripple {
+    animation: ripple 0.6s linear;
+  }
+
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  .btn-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+    z-index: 1;
+  }
+
+  .btn:hover:not(.btn-disabled) .btn-shine {
+    left: 100%;
+  }
+
+  /* Size-specific icon adjustments */
+  .btn-xs .btn-icon {
+    width: 0.75em;
+    height: 0.75em;
+  }
+
+  .btn-sm .btn-icon {
+    width: 0.875em;
+    height: 0.875em;
+  }
+
+  .btn-lg .btn-icon {
+    width: 1.125em;
+    height: 1.125em;
+  }
+
+  .btn-xl .btn-icon {
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  /* Modern Surface Effects */
+  .btn-surface-flat {
+    box-shadow: none;
+  }
+
+  .btn-surface-glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-medium);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      var(--shadow-lg),
+      inset 0 1px 0 var(--glass-highlight);
+  }
+
+  .btn-surface-glass:hover:not(.btn-disabled) {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-intense);
+    border: 1px solid var(--glass-border);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      var(--shadow-xl),
+      inset 0 1px 0 var(--glass-highlight);
+  }
+
+  .btn-surface-elevated {
+    box-shadow: var(--shadow-xl);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-surface-elevated:hover:not(.btn-disabled) {
+    box-shadow: var(--shadow-2xl);
+    transform: translateY(-3px) scale(1.02);
+  }
+
+  .btn-surface-gradient {
+    background: var(--gradient-primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-surface-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.15));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-surface-gradient:hover:not(.btn-disabled)::before {
+    opacity: 1;
+  }
+
+  .btn-surface-mesh {
+    background:
+      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.3) 1px, transparent 0),
+      var(--gradient-primary);
+    background-size:
+      16px 16px,
+      100% 100%;
+    position: relative;
+  }
+
+  [data-theme='dark'] .btn-surface-mesh {
+    background:
+      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.2) 1px, transparent 0),
+      var(--gradient-primary);
+    background-size:
+      16px 16px,
+      100% 100%;
+  }
+
+  .btn-surface-mesh:hover:not(.btn-disabled) {
+    background-size:
+      12px 12px,
+      100% 100%;
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  /* Enhanced Motion Profiles */
+  .btn-motion-none {
+    transition: none;
+  }
+
+  .btn-motion-none:hover:not(.btn-disabled) {
+    transform: none;
+  }
+
+  .btn-motion-minimal {
+    transition: opacity 0.2s ease;
+  }
+
+  .btn-motion-minimal:hover:not(.btn-disabled) {
+    transform: none;
+    opacity: 0.8;
+  }
+
+  .btn-motion-respectful {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-motion-expressive {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-motion-expressive:hover:not(.btn-disabled) {
+    transform: translateY(-4px) scale(1.05);
+  }
+
+  .btn-motion-playful {
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .btn-motion-playful:hover:not(.btn-disabled) {
+    transform: translateY(-3px) rotate(2deg) scale(1.03);
+  }
+
+  .btn-motion-playful:active:not(.btn-disabled) {
+    transform: translateY(-1px) rotate(-1deg) scale(1.01);
+  }
+
+  /* Enhanced Haptic Feedback Visual Indicator */
+  .btn-haptic::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 8px;
+    height: 8px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    opacity: 0.9;
+    animation: pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.6;
+    }
+  }
+
+  /* Responsive design and accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn-glow,
+    .btn-shine {
+      transition: none;
+      animation: none;
+    }
+
+    .btn:hover:not(.btn-disabled) {
+      transform: none;
+    }
+
+    .btn-ripple {
+      animation: none;
+    }
+
+    .btn-shine {
+      display: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .btn {
+      border-width: 2px;
+      backdrop-filter: none;
+    }
+
+    .btn-glow {
+      display: none;
+    }
+  }
+</style>

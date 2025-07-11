@@ -1,0 +1,129 @@
+---
+import type { ComponentExample } from '@/data/types';
+import Button from '@/components/atoms/Button.astro';
+import Badge from '@/components/atoms/Badge.astro';
+import Card from '@/components/molecules/Card.astro';
+import FormField from '@/components/molecules/FormField.astro';
+import Navigation from '@/components/organisms/Navigation.astro';
+import Hero from '@/components/organisms/Hero.astro';
+import Pricing from '@/components/organisms/Pricing.astro';
+import Testimonials from '@/components/organisms/Testimonials.astro';
+import About from '@/components/organisms/About.astro';
+import Contact from '@/components/organisms/Contact.astro';
+
+export interface Props {
+  example: ComponentExample;
+  componentName: string;
+}
+
+const { example, componentName } = Astro.props;
+
+// Component mapping - add new components here as they're created
+const componentMap = {
+  Button: Button,
+  Badge: Badge,
+  Card: Card,
+  FormField: FormField,
+  Navigation: Navigation,
+  Hero: Hero,
+  Pricing: Pricing,
+  Testimonials: Testimonials,
+  About: About,
+  Contact: Contact,
+} as const;
+
+// Get the component to render
+const Component = componentMap[componentName as keyof typeof componentMap];
+
+if (!Component) {
+  throw new Error(
+    `Component "${componentName}" not found in componentMap. Available components: ${Object.keys(componentMap).join(', ')}`
+  );
+}
+
+// Components that don't use slot content (children)
+const componentsWithoutSlots: string[] = [
+  'Badge',
+  'FormField',
+  'Navigation',
+  'Hero',
+  'Pricing',
+  'Testimonials',
+  'About',
+  'Contact',
+];
+const shouldRenderChildren = !componentsWithoutSlots.includes(componentName);
+
+// Ensure props exist and have required properties
+const safeProps = example.props || {};
+
+// Type assertion for dynamic component rendering
+const DynamicComponent = Component as any;
+---
+
+<div class="component-example">
+  {
+    shouldRenderChildren ? (
+      <DynamicComponent {...safeProps}>{example.label}</DynamicComponent>
+    ) : (
+      <DynamicComponent {...safeProps} />
+    )
+  }
+
+  <code class="component-code">{example.code}</code>
+
+  {
+    example.rgbInfo && (
+      <div class="rgb-info">
+        <small>{example.rgbInfo}</small>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .component-example {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    align-items: flex-start;
+  }
+
+  .component-code {
+    font-family: var(--font-family-mono);
+    font-size: var(--text-body-sm);
+    color: var(--color-text-muted);
+    background: var(--color-surface-elevated);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  .rgb-info {
+    margin-top: var(--space-xs);
+  }
+
+  .rgb-info small {
+    font-family: var(--font-family-mono);
+    font-size: var(--text-caption);
+    color: var(--color-text-muted);
+    background: var(--color-surface);
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    display: block;
+    word-break: break-all;
+  }
+
+  /* Special handling for full width buttons */
+  .component-example:has(.btn-full-width) {
+    align-items: stretch;
+  }
+
+  .component-example:has(.btn-full-width) .component-code {
+    align-self: flex-start;
+  }
+</style>

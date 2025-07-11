@@ -1,0 +1,325 @@
+---
+import { Icon } from 'astro-icon/components';
+import Card from '@/components/molecules/Card.astro';
+import { validateTestimonialsProps, type TestimonialsProps } from '@/lib/schemas';
+
+// Testimonials component props with runtime validation
+export interface Props extends TestimonialsProps {
+  class?: string;
+}
+
+// Validate props at runtime in development
+if (import.meta.env.DEV) {
+  try {
+    validateTestimonialsProps(Astro.props);
+  } catch (error) {
+    console.error('Testimonials props validation failed:', error);
+  }
+}
+
+const {
+  title = 'What Our Customers Say',
+  subtitle = 'Real experiences from real people',
+  testimonials,
+  variant = 'cards',
+  class: className = '',
+} = Astro.props;
+
+// Build classes
+const baseClasses = ['testimonials', `testimonials--${variant}`, className]
+  .filter(Boolean)
+  .join(' ');
+
+// Helper function to render rating stars
+function renderRating(rating?: number) {
+  if (!rating) return null;
+  const stars = [];
+  for (let i = 1; i <= 5; i++) {
+    stars.push(i <= rating ? 'full' : 'empty');
+  }
+  return stars;
+}
+---
+
+<section class={baseClasses}>
+  <div class="testimonials__container">
+    <div class="testimonials__header">
+      <h2 class="testimonials__title">{title}</h2>
+      {subtitle && <p class="testimonials__subtitle">{subtitle}</p>}
+    </div>
+
+    <div class="testimonials__grid">
+      {
+        testimonials.map((testimonial) => (
+          <Card variant="glass" surface="glass" class="testimonial">
+            <div class="testimonial__content">
+              {testimonial.rating && (
+                <div
+                  class="testimonial__rating"
+                  aria-label={`Rating: ${testimonial.rating} out of 5 stars`}
+                >
+                  {renderRating(testimonial.rating)?.map((type) => (
+                    <Icon
+                      name={type === 'full' ? 'lucide:star' : 'lucide:star'}
+                      class={`testimonial__star ${type === 'full' ? 'testimonial__star--filled' : ''}`}
+                    />
+                  ))}
+                </div>
+              )}
+
+              <blockquote class="testimonial__quote">"{testimonial.quote}"</blockquote>
+
+              <div class="testimonial__author">
+                {testimonial.image && (
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.author}
+                    class="testimonial__avatar"
+                    loading="lazy"
+                  />
+                )}
+                <div class="testimonial__author-info">
+                  <cite class="testimonial__author-name">{testimonial.author}</cite>
+                  {(testimonial.role || testimonial.company) && (
+                    <p class="testimonial__author-details">
+                      {testimonial.role}
+                      {testimonial.role && testimonial.company && ' at '}
+                      {testimonial.company}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Card>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    padding: var(--space-2xl) 0;
+  }
+
+  .testimonials__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+  }
+
+  .testimonials__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .testimonials__title {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    margin: 0 0 var(--space-md) 0;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .testimonials__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    margin: 0 auto;
+    max-width: 65ch;
+  }
+
+  /* Grid Layouts */
+  .testimonials--cards .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .testimonials--carousel .testimonials__grid {
+    display: flex;
+    gap: var(--space-lg);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding-bottom: var(--space-md);
+  }
+
+  .testimonials--carousel .testimonial {
+    flex: 0 0 min(400px, 90vw);
+    scroll-snap-align: start;
+  }
+
+  .testimonials--masonry .testimonials__grid {
+    columns: 3 350px;
+    column-gap: var(--space-lg);
+  }
+
+  .testimonials--masonry .testimonial {
+    break-inside: avoid;
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Testimonial Card */
+  .testimonial {
+    height: 100%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .testimonial:hover {
+    transform: translateY(-4px);
+  }
+
+  .testimonial__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    height: 100%;
+  }
+
+  /* Rating Stars */
+  .testimonial__rating {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .testimonial__star {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-border);
+    transition: all 0.2s ease;
+  }
+
+  .testimonial__star--filled {
+    color: var(--color-warning);
+    fill: var(--color-warning);
+  }
+
+  /* Quote */
+  .testimonial__quote {
+    font-size: var(--text-lg);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-primary);
+    font-style: italic;
+    margin: 0;
+    flex: 1;
+    position: relative;
+  }
+
+  .testimonial__quote::before {
+    content: '"';
+    position: absolute;
+    top: -0.5rem;
+    left: -1rem;
+    font-size: var(--text-4xl);
+    color: var(--color-brand-primary);
+    opacity: 0.3;
+    font-family: serif;
+  }
+
+  /* Author */
+  .testimonial__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: auto;
+  }
+
+  .testimonial__avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 2px solid var(--glass-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .testimonial__author-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .testimonial__author-name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    font-style: normal;
+  }
+
+  .testimonial__author-details {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* Dark Mode Adjustments */
+  [data-theme='dark'] .testimonial__quote {
+    color: var(--color-text-primary);
+  }
+
+  [data-theme='dark'] .testimonial__star {
+    color: var(--color-border);
+  }
+
+  [data-theme='dark'] .testimonial__star--filled {
+    color: var(--color-warning);
+  }
+
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .testimonials--cards .testimonials__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonials--masonry .testimonials__grid {
+      columns: 1;
+    }
+
+    .testimonial__quote {
+      font-size: var(--text-base);
+    }
+  }
+
+  /* Scrollbar Styling for Carousel */
+  .testimonials--carousel .testimonials__grid::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .testimonials--carousel .testimonials__grid::-webkit-scrollbar-track {
+    background: var(--glass-bg);
+    border-radius: var(--radius-full);
+  }
+
+  .testimonials--carousel .testimonials__grid::-webkit-scrollbar-thumb {
+    background: var(--color-brand-primary);
+    border-radius: var(--radius-full);
+  }
+
+  /* Responsive design and accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .testimonial {
+      transition: none;
+    }
+
+    .testimonial:hover {
+      transform: none;
+    }
+
+    .testimonials--carousel .testimonials__grid {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .testimonial {
+      border-width: 2px;
+    }
+
+    .testimonial__avatar {
+      border-width: 3px;
+    }
+  }
+</style>

@@ -1,0 +1,116 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Navigation from '@/components/navigation/Navigation.astro';
+import ThemeToggle from '@/components/showcase/ThemeToggle.astro';
+import Hero from '@/components/hero/Hero.astro';
+import Pricing from '@/components/pricing/Pricing.astro';
+import Testimonials from '@/components/testimonials/Testimonials.astro';
+import About from '@/components/about/About.astro';
+import Contact from '@/components/contact/Contact.astro';
+---
+
+<Layout title="Astro Component Library - Modern Design System">
+  <Navigation
+    links={[
+      { label: 'Home', href: '/' },
+      { label: 'Components', href: '/components' },
+      { label: 'Pricing', href: '#pricing' },
+      { label: 'Testimonials', href: '#testimonials' },
+      { label: 'About', href: '#about' },
+      { label: 'Contact', href: '#contact' },
+    ]}
+  />
+
+  <main>
+    <ThemeToggle />
+    <Hero
+      title="Build Amazing Web Experiences"
+      subtitle="Our modern Astro component library provides everything you need to create stunning, high-performance websites."
+      ctaButtons={[
+        { label: 'Get Started', href: '/components', variant: 'primary' },
+        { label: 'Learn More', href: '#about', variant: 'outline' },
+      ]}
+    />
+
+    <Pricing
+      id="pricing"
+      plans={[
+        {
+          name: 'Starter',
+          price: '$19/month',
+          features: ['5 Projects', '10GB Storage', 'Basic Support'],
+          cta: { label: 'Get Started', href: '#', variant: 'primary' },
+        },
+        {
+          name: 'Pro',
+          price: '$49/month',
+          features: ['Unlimited Projects', '100GB Storage', 'Priority Support'],
+          cta: { label: 'Go Pro', href: '#', variant: 'secondary' },
+        },
+        {
+          name: 'Enterprise',
+          price: '$99/month',
+          features: ['All Pro Features', 'Dedicated Manager', 'Custom Integrations'],
+          cta: { label: 'Contact Us', href: '#', variant: 'outline' },
+        },
+      ]}
+    />
+
+    <Testimonials
+      id="testimonials"
+      testimonials={[
+        {
+          quote: 'This library is a game-changer! Development speed has increased dramatically.',
+          author: 'Alex Johnson',
+          avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+        },
+        {
+          quote: 'Beautifully designed components that are easy to use and customize.',
+          author: 'Sarah Chen',
+          avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+        },
+        {
+          quote: 'Accessibility and performance are top-notch. Highly recommend!',
+          author: 'Michael Brown',
+          avatar: 'https://randomuser.me/api/portraits/men/55.jpg',
+        },
+      ]}
+    />
+
+    <About
+      id="about"
+      title="About Our Mission"
+      content="We believe in empowering developers with tools that are not only powerful and performant but also a joy to use. Our component library is built with a focus on modern design, accessibility, and developer experience."
+      image={{ src: 'https://via.placeholder.com/800x500', alt: 'Our Team Working' }}
+      cta={{ label: 'Discover More', href: '/components', variant: 'primary' }}
+    />
+
+    <Contact
+      id="contact"
+      title="Get in Touch"
+      description="Have a question or want to work with us? Send us a message!"
+      formFields={[
+        { id: 'name', label: 'Name', type: 'text', placeholder: 'Your Name' },
+        { id: 'email', label: 'Email', type: 'email', placeholder: 'your@example.com' },
+        { id: 'message', label: 'Message', type: 'textarea', placeholder: 'Your message', rows: 5 },
+      ]}
+      contactInfo={{
+        email: 'info@example.com',
+        phone: '+1 (555) 123-4567',
+        address: '123 Component Lane, Astro City, AC 98765',
+      }}
+      cta={{ label: 'Send Message', variant: 'primary' }}
+    />
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4xl);
+    padding: var(--space-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+</style>

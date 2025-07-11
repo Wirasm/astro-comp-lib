@@ -1,0 +1,261 @@
+---
+import { Icon } from 'astro-icon/components';
+import { validateFormFieldProps, type FormFieldProps } from '@/lib/schemas';
+
+// FormField component props with runtime validation
+export interface Props extends FormFieldProps {
+  class?: string;
+}
+
+// Validate props at runtime in development
+if (import.meta.env.DEV) {
+  try {
+    validateFormFieldProps(Astro.props);
+  } catch (error) {
+    console.error('FormField props validation failed:', error);
+  }
+}
+
+const {
+  name,
+  label,
+  type = 'text',
+  required = false,
+  placeholder,
+  error,
+  value,
+  class: className = '',
+} = Astro.props;
+
+// Build classes
+const baseClasses = ['form-field', error && 'form-field--error', className]
+  .filter(Boolean)
+  .join(' ');
+
+const inputClasses = ['form-field__input', type === 'textarea' && 'form-field__textarea']
+  .filter(Boolean)
+  .join(' ');
+
+// Generate unique ID for accessibility
+const fieldId = `field-${name}`;
+const errorId = error ? `${fieldId}-error` : undefined;
+---
+
+<div class={baseClasses}>
+  <label for={fieldId} class="form-field__label">
+    {label}
+    {
+      required && (
+        <span class="form-field__required" aria-label="required">
+          *
+        </span>
+      )
+    }
+  </label>
+
+  {
+    type === 'textarea' ? (
+      <textarea
+        id={fieldId}
+        name={name}
+        class={inputClasses}
+        placeholder={placeholder}
+        required={required}
+        aria-invalid={error ? 'true' : undefined}
+        aria-describedby={errorId}
+        rows="4"
+      >
+        {value}
+      </textarea>
+    ) : (
+      <input
+        id={fieldId}
+        name={name}
+        type={type}
+        class={inputClasses}
+        placeholder={placeholder}
+        required={required}
+        value={value}
+        aria-invalid={error ? 'true' : undefined}
+        aria-describedby={errorId}
+      />
+    )
+  }
+
+  {
+    error && (
+      <div id={errorId} class="form-field__error" role="alert">
+        <Icon name="lucide:alert-circle" class="form-field__error-icon" />
+        <span>{error}</span>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    width: 100%;
+  }
+
+  /* Label */
+  .form-field__label {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .form-field__required {
+    color: var(--color-danger);
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* Input/Textarea Base Styles */
+  .form-field__input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-family-sans);
+    font-size: var(--text-base);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-primary);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-subtle);
+    -webkit-backdrop-filter: var(--glass-subtle);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow:
+      var(--shadow-sm),
+      inset 0 1px 0 var(--glass-highlight);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+  }
+
+  .form-field__textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  /* Placeholder */
+  .form-field__input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.7;
+  }
+
+  /* Focus State */
+  .form-field__input:focus {
+    border-color: var(--color-brand-primary);
+    box-shadow:
+      0 0 0 3px rgba(59, 130, 246, 0.1),
+      var(--shadow-sm),
+      inset 0 1px 0 var(--glass-highlight);
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Hover State */
+  .form-field__input:hover:not(:focus) {
+    border-color: var(--color-border);
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  /* Error State */
+  .form-field--error .form-field__input {
+    border-color: var(--color-danger);
+  }
+
+  .form-field--error .form-field__input:focus {
+    border-color: var(--color-danger);
+    box-shadow:
+      0 0 0 3px rgba(244, 63, 94, 0.1),
+      var(--shadow-sm),
+      inset 0 1px 0 var(--glass-highlight);
+  }
+
+  /* Error Message */
+  .form-field__error {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--color-danger);
+    margin-top: var(--space-xs);
+  }
+
+  .form-field__error-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* Disabled State */
+  .form-field__input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: var(--color-surface);
+  }
+
+  /* Dark Mode Adjustments */
+  [data-theme='dark'] .form-field__input {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-primary);
+  }
+
+  [data-theme='dark'] .form-field__input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-brand-primary);
+  }
+
+  [data-theme='dark'] .form-field__input:hover:not(:focus) {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  [data-theme='dark'] .form-field__input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  /* Autofill Styles */
+  .form-field__input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100px var(--color-surface) inset;
+    -webkit-text-fill-color: var(--color-text-primary);
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /* Responsive design and accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .form-field__input {
+      transition: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .form-field__input {
+      border-width: 2px;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: var(--color-surface);
+    }
+
+    .form-field__input:focus {
+      outline: 3px solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+
+  /* Fallback for browsers without backdrop-filter support */
+  @supports not (backdrop-filter: blur(10px)) {
+    .form-field__input {
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    [data-theme='dark'] .form-field__input {
+      background: rgba(0, 0, 0, 0.95);
+    }
+  }
+</style>

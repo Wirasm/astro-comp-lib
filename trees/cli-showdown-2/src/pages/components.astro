@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ComponentSection from '../components/showcase/ComponentSection.astro';
+import ColorShowcase from '../components/showcase/ColorShowcase.astro';
+import TypographyShowcase from '../components/showcase/TypographyShowcase.astro';
+import IconShowcase from '../components/showcase/IconShowcase.astro';
+import { showcaseConfig } from '../data/showcase';
+
+// Import all components
+import Button from '../components/atoms/Button.astro';
+import Navigation from '../components/navigation/Navigation.astro';
+import Hero from '../components/hero/Hero.astro';
+import Pricing from '../components/pricing/Pricing.astro';
+import Testimonials from '../components/testimonials/Testimonials.astro';
+import About from '../components/about/About.astro';
+import Contact from '../components/contact/Contact.astro';
+
+// Create a map of component names to their actual imported components
+const componentMap = {
+  Button,
+  Navigation,
+  Hero,
+  Pricing,
+  Testimonials,
+  About,
+  Contact,
+};
+---
+
+<Layout title="Component Showcase">
+  <main>
+    <h1>Component Showcase</h1>
+
+    <ColorShowcase palettes={showcaseConfig.sections.colors} />
+    <TypographyShowcase examples={showcaseConfig.sections.typography} />
+    <IconShowcase examples={showcaseConfig.sections.icons} />
+
+    {
+      showcaseConfig.sections.components.map((componentData) => {
+        const Component = componentMap[componentData.component as keyof typeof componentMap];
+        return Component ? <ComponentSection showcase={componentData} component={Component} /> : null;
+      })
+    }
+  </main>
+</Layout>

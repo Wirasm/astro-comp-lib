@@ -1,0 +1,273 @@
+/* Modern Design Tokens - RGB Gradient System */
+
+:root {
+  /* Primary Brand Colors - Electric Blue */
+  --brand-primary-50: 214 100% 97%; /* #f0f9ff */
+  --brand-primary-100: 214 95% 93%; /* #e0f2fe */
+  --brand-primary-200: 213 97% 87%; /* #bae6fd */
+  --brand-primary-300: 212 96% 78%; /* #7dd3fc */
+  --brand-primary-400: 213 94% 68%; /* #38bdf8 */
+  --brand-primary-500: 199 89% 48%; /* #0ea5e9 */
+  --brand-primary-600: 200 98% 39%; /* #0284c7 */
+  --brand-primary-700: 201 96% 32%; /* #0369a1 */
+  --brand-primary-800: 201 90% 27%; /* #075985 */
+  --brand-primary-900: 202 80% 24%; /* #0c4a6e */
+
+  /* Secondary Colors - Violet */
+  --brand-secondary-50: 270 100% 98%; /* #faf5ff */
+  --brand-secondary-100: 269 100% 95%; /* #f3e8ff */
+  --brand-secondary-200: 269 100% 92%; /* #e9d5ff */
+  --brand-secondary-300: 268 100% 86%; /* #d8b4fe */
+  --brand-secondary-400: 270 95% 75%; /* #c084fc */
+  --brand-secondary-500: 271 91% 65%; /* #a855f7 */
+  --brand-secondary-600: 271 81% 56%; /* #9333ea */
+  --brand-secondary-700: 272 72% 47%; /* #7c3aed */
+  --brand-secondary-800: 273 67% 39%; /* #6d28d9 */
+  --brand-secondary-900: 274 66% 32%; /* #581c87 */
+
+  /* Accent Colors - Cyan */
+  --accent-cool-50: 183 100% 96%; /* #ecfeff */
+  --accent-cool-100: 185 96% 90%; /* #cffafe */
+  --accent-cool-200: 186 94% 82%; /* #a5f3fc */
+  --accent-cool-300: 187 92% 69%; /* #67e8f9 */
+  --accent-cool-400: 188 86% 53%; /* #22d3ee */
+  --accent-cool-500: 189 94% 43%; /* #06b6d4 */
+  --accent-cool-600: 192 91% 36%; /* #0891b2 */
+  --accent-cool-700: 194 100% 28%; /* #0e7490 */
+  --accent-cool-800: 196 94% 22%; /* #155e75 */
+  --accent-cool-900: 197 89% 18%; /* #164e63 */
+
+  /* Success Colors - Emerald */
+  --success-50: 151 81% 96%; /* #ecfdf5 */
+  --success-100: 149 80% 90%; /* #d1fae5 */
+  --success-200: 152 76% 80%; /* #a7f3d0 */
+  --success-300: 156 72% 67%; /* #6ee7b7 */
+  --success-400: 158 64% 52%; /* #34d399 */
+  --success-500: 160 84% 39%; /* #10b981 */
+  --success-600: 161 94% 30%; /* #059669 */
+  --success-700: 162 93% 24%; /* #047857 */
+  --success-800: 163 88% 20%; /* #065f46 */
+  --success-900: 164 86% 16%; /* #064e3b */
+
+  /* Warning Colors - Amber */
+  --warning-50: 48 100% 96%; /* #fffbeb */
+  --warning-100: 48 96% 89%; /* #fef3c7 */
+  --warning-200: 48 97% 77%; /* #fde68a */
+  --warning-300: 46 97% 65%; /* #fcd34d */
+  --warning-400: 43 96% 56%; /* #fbbf24 */
+  --warning-500: 38 92% 50%; /* #f59e0b */
+  --warning-600: 32 95% 44%; /* #d97706 */
+  --warning-700: 26 90% 37%; /* #b45309 */
+  --warning-800: 23 83% 31%; /* #92400e */
+  --warning-900: 22 78% 26%; /* #78350f */
+
+  /* Danger Colors - Rose */
+  --danger-50: 355 100% 97%; /* #fff1f2 */
+  --danger-100: 356 100% 95%; /* #ffe4e6 */
+  --danger-200: 353 96% 90%; /* #fecdd3 */
+  --danger-300: 352 95% 81%; /* #fda4af */
+  --danger-400: 351 95% 71%; /* #fb7185 */
+  --danger-500: 350 89% 60%; /* #f43f5e */
+  --danger-600: 347 77% 50%; /* #e11d48 */
+  --danger-700: 345 82% 41%; /* #be123c */
+  --danger-800: 343 84% 35%; /* #9f1239 */
+  --danger-900: 341 75% 30%; /* #881337 */
+
+  /* Neutral Colors - Slate */
+  --neutral-50: 210 40% 98%; /* #f8fafc */
+  --neutral-100: 210 40% 96%; /* #f1f5f9 */
+  --neutral-200: 214 32% 91%; /* #e2e8f0 */
+  --neutral-300: 213 27% 84%; /* #cbd5e1 */
+  --neutral-400: 215 20% 65%; /* #94a3b8 */
+  --neutral-500: 215 16% 47%; /* #64748b */
+  --neutral-600: 215 19% 35%; /* #475569 */
+  --neutral-700: 215 25% 27%; /* #334155 */
+  --neutral-800: 217 33% 17%; /* #1e293b */
+  --neutral-900: 222 84% 5%; /* #0f172a */
+
+  /* Modern Typography Scale - Fluid & Responsive */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem); /* 12-14px */
+  --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem); /* 14-16px */
+  --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem); /* 16-18px */
+  --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.375rem); /* 18-22px */
+  --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.625rem); /* 20-26px */
+  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem); /* 24-32px */
+  --text-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.5rem); /* 30-40px */
+  --text-4xl: clamp(2.25rem, 1.9rem + 1.75vw, 3.125rem); /* 36-50px */
+  --text-5xl: clamp(3rem, 2.5rem + 2.5vw, 4rem); /* 48-64px */
+  --text-6xl: clamp(3.75rem, 3rem + 3.75vw, 5rem); /* 60-80px */
+  
+  /* Legacy aliases for backward compatibility */
+  --text-display: var(--text-6xl);
+  --text-title: var(--text-5xl);
+  --text-headline: var(--text-4xl);
+  --text-subhead: var(--text-2xl);
+  --text-body-lg: var(--text-lg);
+  --text-body: var(--text-base);
+  --text-body-sm: var(--text-sm);
+  --text-caption: var(--text-xs);
+  --text-code: var(--text-sm);
+  --text-code-sm: var(--text-xs);
+
+  /* Spacing Scale */
+  --space-xs: 0.25rem; /* 4px */
+  --space-sm: 0.5rem; /* 8px */
+  --space-md: 1rem; /* 16px */
+  --space-lg: 1.5rem; /* 24px */
+  --space-xl: 2rem; /* 32px */
+  --space-2xl: 3rem; /* 48px */
+  --space-3xl: 4rem; /* 64px */
+  --space-4xl: 6rem; /* 96px */
+
+  /* Border Radius */
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+  --radius-2xl: 1.5rem; /* 24px */
+  --radius-full: 9999px;
+
+  /* Advanced Shadow System - Depth Layers */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+  
+  /* Colored Shadows for Modern Effects */
+  --shadow-primary: 0 20px 40px -12px rgb(59 130 246 / 0.25);
+  --shadow-secondary: 0 20px 40px -12px rgb(139 92 246 / 0.25);
+  --shadow-success: 0 20px 40px -12px rgb(16 185 129 / 0.25);
+  --shadow-warning: 0 20px 40px -12px rgb(245 158 11 / 0.25);
+  --shadow-danger: 0 20px 40px -12px rgb(244 63 94 / 0.25);
+  
+  /* Glass Morphism Effects */
+  --glass-subtle: blur(12px) saturate(200%);
+  --glass-medium: blur(24px) saturate(150%);
+  --glass-intense: blur(40px) saturate(180%);
+  
+  /* Gradient Definitions */
+  --gradient-primary: linear-gradient(135deg, rgb(59 130 246) 0%, rgb(34 197 255) 100%);
+  --gradient-secondary: linear-gradient(135deg, rgb(139 92 246) 0%, rgb(168 85 247) 100%);
+  --gradient-success: linear-gradient(135deg, rgb(16 185 129) 0%, rgb(20 184 166) 100%);
+  --gradient-warning: linear-gradient(135deg, rgb(245 158 11) 0%, rgb(251 146 60) 100%);
+  --gradient-danger: linear-gradient(135deg, rgb(244 63 94) 0%, rgb(236 72 153) 100%);
+  
+  /* Mesh Gradients */
+  --gradient-mesh-1: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+  --gradient-mesh-2: radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 50%);
+  --gradient-mesh-3: radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
+  --gradient-mesh-bg: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  
+  /* Conic Gradients */
+  --gradient-conic-primary: conic-gradient(from 180deg at 50% 50%, rgb(59 130 246) 0deg, rgb(34 197 255) 180deg, rgb(59 130 246) 360deg);
+  --gradient-conic-secondary: conic-gradient(from 180deg at 50% 50%, rgb(139 92 246) 0deg, rgb(168 85 247) 180deg, rgb(139 92 246) 360deg);
+}
+
+/* Modern Light Theme (Default) */
+:root {
+  /* Semantic Colors */
+  --color-background: hsl(var(--neutral-50));
+  --color-surface: hsl(var(--neutral-100));
+  --color-surface-elevated: hsl(var(--neutral-200));
+  
+  --color-text-primary: hsl(var(--neutral-900));
+  --color-text-secondary: hsl(var(--neutral-700));
+  --color-text-muted: hsl(var(--neutral-500));
+  
+  --color-brand-primary: hsl(var(--brand-primary-500));
+  --color-brand-secondary: hsl(var(--brand-secondary-500));
+  --color-accent: hsl(var(--accent-cool-500));
+  
+  /* Semantic Button Colors */
+  --color-success: hsl(var(--success-500));
+  --color-warning: hsl(var(--warning-500));
+  --color-danger: hsl(var(--danger-500));
+  
+  --color-border: hsl(var(--neutral-300));
+  --color-border-subtle: hsl(var(--neutral-200));
+  
+  /* Glass Morphism Colors */
+  --glass-bg: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-highlight: rgba(255, 255, 255, 0.4);
+  
+  /* Gradient Overlays */
+  --overlay-primary: rgba(59, 130, 246, 0.1);
+  --overlay-secondary: rgba(139, 92, 246, 0.1);
+  --overlay-success: rgba(16, 185, 129, 0.1);
+  --overlay-warning: rgba(245, 158, 11, 0.1);
+  --overlay-danger: rgba(244, 63, 94, 0.1);
+}
+
+/* Modern Dark Theme */
+[data-theme="dark"] {
+  /* Semantic Colors */
+  --color-background: hsl(var(--neutral-900));
+  --color-surface: hsl(var(--neutral-800));
+  --color-surface-elevated: hsl(var(--neutral-700));
+  
+  --color-text-primary: hsl(var(--neutral-50));
+  --color-text-secondary: hsl(var(--neutral-100));
+  --color-text-muted: hsl(var(--neutral-400));
+  
+  --color-brand-primary: hsl(var(--brand-primary-400));
+  --color-brand-secondary: hsl(var(--brand-secondary-400));
+  --color-accent: hsl(var(--accent-cool-400));
+  
+  /* Semantic Button Colors */
+  --color-success: hsl(var(--success-400));
+  --color-warning: hsl(var(--warning-400));
+  --color-danger: hsl(var(--danger-400));
+  
+  --color-border: hsl(var(--neutral-600));
+  --color-border-subtle: hsl(var(--neutral-700));
+  
+  /* Glass Morphism Colors - Dark */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.2);
+  
+  /* Gradient Overlays - Dark */
+  --overlay-primary: rgba(59, 130, 246, 0.15);
+  --overlay-secondary: rgba(139, 92, 246, 0.15);
+  --overlay-success: rgba(16, 185, 129, 0.15);
+  --overlay-warning: rgba(245, 158, 11, 0.15);
+  --overlay-danger: rgba(244, 63, 94, 0.15);
+}
+
+/* Modern Font System */
+:root {
+  --font-family-display: 'Inter Display', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', monospace;
+  
+  /* Font Weights */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+  
+  /* Line Heights */
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+  
+  /* Letter Spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+}

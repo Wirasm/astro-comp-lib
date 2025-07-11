@@ -1,0 +1,104 @@
+---
+import { validatePricingProps, type PricingProps } from '@/lib/schemas';
+import Button from '../atoms/Button.astro';
+
+export interface Props extends PricingProps {
+  id?: string;
+}
+
+if (import.meta.env.DEV) {
+  try {
+    validatePricingProps(Astro.props);
+  } catch (error) {
+    console.error('Pricing props validation failed:', error);
+  }
+}
+
+const { id, plans } = Astro.props;
+---
+
+<section class="pricing" id={id}>
+  <h2 class="pricing-title">Choose Your Plan</h2>
+  <div class="pricing-grid">
+    {
+      plans.map((plan) => (
+        <div class="pricing-card">
+          <h3 class="pricing-card-title">{plan.name}</h3>
+          <p class="pricing-card-price">{plan.price}</p>
+          <ul class="pricing-card-features">
+            {plan.features.map((feature) => (
+              <li>{feature}</li>
+            ))}
+          </ul>
+          <Button href={plan.cta.href} variant={plan.cta.variant} fullWidth>
+            {plan.cta.label}
+          </Button>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .pricing {
+    padding: var(--space-4xl) var(--space-lg);
+    text-align: center;
+  }
+
+  .pricing-title {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-xl);
+    justify-content: center;
+  }
+
+  .pricing-card {
+    background-color: var(--color-surface-2);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .pricing-card-title {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-brand-primary);
+  }
+
+  .pricing-card-price {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-xl);
+  }
+
+  .pricing-card-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-xl) 0;
+    text-align: left;
+    width: 100%;
+  }
+
+  .pricing-card-features li {
+    margin-bottom: var(--space-sm);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+  }
+
+  .pricing-card-features li::before {
+    content: '\2713'; /* Checkmark */
+    color: var(--color-success);
+    margin-right: var(--space-sm);
+  }
+</style>

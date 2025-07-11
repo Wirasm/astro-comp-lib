@@ -1,0 +1,296 @@
+---
+import { Icon } from 'astro-icon/components';
+import Card from '@/components/molecules/Card.astro';
+import Badge from '@/components/atoms/Badge.astro';
+import Button from '@/components/atoms/Button.astro';
+import { validatePricingProps, type PricingProps } from '@/lib/schemas';
+
+// Pricing component props with runtime validation
+export interface Props extends PricingProps {
+  class?: string;
+}
+
+// Validate props at runtime in development
+if (import.meta.env.DEV) {
+  try {
+    validatePricingProps(Astro.props);
+  } catch (error) {
+    console.error('Pricing props validation failed:', error);
+  }
+}
+
+const {
+  title = 'Choose Your Plan',
+  subtitle = 'Select the perfect plan for your needs',
+  plans,
+  class: className = '',
+} = Astro.props;
+
+// Build classes
+const baseClasses = ['pricing', className].filter(Boolean).join(' ');
+---
+
+<section class={baseClasses}>
+  <div class="pricing__container">
+    <div class="pricing__header">
+      <h2 class="pricing__title">{title}</h2>
+      {subtitle && <p class="pricing__subtitle">{subtitle}</p>}
+    </div>
+
+    <div class="pricing__plans">
+      {
+        plans.map((plan) => (
+          <Card
+            variant={plan.featured ? 'glass' : 'default'}
+            surface={plan.featured ? 'elevated' : 'flat'}
+            class={`pricing__plan ${plan.featured ? 'pricing__plan--featured' : ''}`}
+          >
+            {plan.featured && (
+              <div class="pricing__badge">
+                <Badge text="MOST POPULAR" variant="primary" size="sm" />
+              </div>
+            )}
+
+            <div class="pricing__plan-header">
+              <h3 class="pricing__plan-name">{plan.name}</h3>
+              <div class="pricing__price-wrapper">
+                <span class="pricing__price">{plan.price}</span>
+                {plan.period && <span class="pricing__period">/{plan.period}</span>}
+              </div>
+              {plan.description && <p class="pricing__plan-description">{plan.description}</p>}
+            </div>
+
+            <ul class="pricing__features">
+              {plan.features.map((feature) => (
+                <li class="pricing__feature">
+                  <Icon name="lucide:check" class="pricing__feature-icon" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div class="pricing__action">
+              <Button
+                href={plan.ctaHref || '#'}
+                variant={plan.featured ? 'primary' : 'outline'}
+                size="lg"
+                fullWidth
+                surface={plan.featured ? 'elevated' : 'flat'}
+              >
+                {plan.ctaText}
+              </Button>
+            </div>
+          </Card>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing {
+    padding: var(--space-2xl) 0;
+  }
+
+  .pricing__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+  }
+
+  .pricing__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .pricing__title {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    margin: 0 0 var(--space-md) 0;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .pricing__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    margin: 0 auto;
+    max-width: 65ch;
+  }
+
+  .pricing__plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    align-items: stretch;
+  }
+
+  /* Pricing Plan Card */
+  .pricing__plan {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .pricing__plan:hover {
+    transform: translateY(-4px);
+  }
+
+  .pricing__plan--featured {
+    border-color: var(--color-brand-primary);
+    position: relative;
+    z-index: 1;
+  }
+
+  .pricing__badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  /* Plan Header */
+  .pricing__plan-header {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .pricing__plan-name {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 var(--space-sm) 0;
+    color: var(--color-text-primary);
+  }
+
+  .pricing__price-wrapper {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+  }
+
+  .pricing__price {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    line-height: 1;
+  }
+
+  .pricing__period {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+  }
+
+  .pricing__plan-description {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  /* Features List */
+  .pricing__features {
+    list-style: none;
+    margin: 0 0 var(--space-xl) 0;
+    padding: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .pricing__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .pricing__feature-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-success);
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .pricing__feature span {
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  /* Action Button */
+  .pricing__action {
+    margin-top: auto;
+  }
+
+  /* Featured Plan Enhancements */
+  .pricing__plan--featured {
+    transform: scale(1.05);
+  }
+
+  .pricing__plan--featured:hover {
+    transform: scale(1.05) translateY(-4px);
+  }
+
+  .pricing__plan--featured .pricing__plan-name {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Dark Mode Adjustments */
+  [data-theme='dark'] .pricing__plan-name {
+    color: var(--color-text-primary);
+  }
+
+  [data-theme='dark'] .pricing__plan--featured .pricing__plan-name {
+    background: linear-gradient(135deg, rgb(147 197 253) 0%, rgb(165 243 252) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .pricing__plans {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .pricing__plan--featured {
+      transform: none;
+    }
+
+    .pricing__plan--featured:hover {
+      transform: translateY(-4px);
+    }
+  }
+
+  /* Responsive design and accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .pricing__plan,
+    .pricing__plan--featured {
+      transition: none;
+    }
+
+    .pricing__plan:hover,
+    .pricing__plan--featured:hover {
+      transform: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .pricing__plan--featured {
+      border-width: 3px;
+      border-color: var(--color-brand-primary);
+    }
+  }
+</style>

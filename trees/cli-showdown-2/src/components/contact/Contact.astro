@@ -1,0 +1,174 @@
+---
+import { validateContactProps, type ContactProps } from '@/lib/schemas';
+import Button from '../atoms/Button.astro';
+
+export interface Props extends ContactProps {
+  id?: string;
+}
+
+if (import.meta.env.DEV) {
+  try {
+    validateContactProps(Astro.props);
+  } catch (error) {
+    console.error('Contact props validation failed:', error);
+  }
+}
+
+const { id, title, description, formFields, contactInfo, cta } = Astro.props;
+---
+
+<section class="contact" id={id}>
+  {title && <h2 class="contact-title">{title}</h2>}
+  {description && <p class="contact-description">{description}</p>}
+
+  <div class="contact-content">
+    <form class="contact-form">
+      {
+        formFields.map((field) => (
+          <div class="form-group">
+            <label for={field.id}>{field.label}</label>
+            {field.type === 'textarea' ? (
+              <textarea
+                id={field.id}
+                name={field.id}
+                placeholder={field.placeholder}
+                rows={field.rows}
+              />
+            ) : (
+              <input
+                type={field.type}
+                id={field.id}
+                name={field.id}
+                placeholder={field.placeholder}
+              />
+            )}
+          </div>
+        ))
+      }
+      {
+        cta && (
+          <Button type="submit" variant={cta.variant}>
+            {cta.label}
+          </Button>
+        )
+      }
+    </form>
+
+    {
+      contactInfo && (
+        <div class="contact-info">
+          {contactInfo.email && (
+            <p>
+              Email: <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
+            </p>
+          )}
+          {contactInfo.phone && (
+            <p>
+              Phone: <a href={`tel:${contactInfo.phone}`}>{contactInfo.phone}</a>
+            </p>
+          )}
+          {contactInfo.address && <p>Address: {contactInfo.address}</p>}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding: var(--space-4xl) var(--space-lg);
+    text-align: center;
+  }
+
+  .contact-title {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--space-md);
+  }
+
+  .contact-description {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-3xl);
+    color: var(--color-text-secondary);
+  }
+
+  .contact-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .contact-content {
+      flex-direction: row;
+      text-align: left;
+    }
+  }
+
+  .contact-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    background-color: var(--color-surface-2);
+    padding: var(--space-2xl);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .form-group label {
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-xs);
+    color: var(--color-text-primary);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface-3);
+    color: var(--color-text-primary);
+    font-size: var(--text-base);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: 2px solid var(--color-brand-primary);
+    border-color: transparent;
+  }
+
+  .contact-info {
+    flex: 1;
+    background-color: var(--color-surface-2);
+    padding: var(--space-2xl);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    justify-content: center;
+  }
+
+  .contact-info p {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+  }
+
+  .contact-info a {
+    color: var(--color-brand-primary);
+    text-decoration: none;
+  }
+
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,319 @@
+---
+import { Icon } from 'astro-icon/components';
+import Card from '@/components/molecules/Card.astro';
+import FormField from '@/components/molecules/FormField.astro';
+import Button from '@/components/atoms/Button.astro';
+import { validateContactProps, type ContactProps } from '@/lib/schemas';
+
+// Contact component props with runtime validation
+export interface Props extends ContactProps {
+  class?: string;
+}
+
+// Validate props at runtime in development
+if (import.meta.env.DEV) {
+  try {
+    validateContactProps(Astro.props);
+  } catch (error) {
+    console.error('Contact props validation failed:', error);
+  }
+}
+
+const {
+  title = 'Get in Touch',
+  subtitle = "We'd love to hear from you",
+  fields,
+  submitText = 'Send Message',
+  variant = 'default',
+  class: className = '',
+} = Astro.props;
+
+// Build classes
+const baseClasses = ['contact', `contact--${variant}`, className].filter(Boolean).join(' ');
+---
+
+<section class={baseClasses}>
+  <div class="contact__container">
+    <div class="contact__header">
+      <h2 class="contact__title">{title}</h2>
+      {subtitle && <p class="contact__subtitle">{subtitle}</p>}
+    </div>
+
+    <div class="contact__content">
+      <Card variant="glass" surface="glass" class="contact__form-card">
+        <form class="contact__form" action="#" method="POST">
+          <div class="contact__fields">
+            {
+              fields.map((field) => (
+                <div
+                  class={`contact__field ${field.type === 'textarea' ? 'contact__field--full' : ''}`}
+                >
+                  <FormField {...field} />
+                </div>
+              ))
+            }
+          </div>
+
+          <div class="contact__actions">
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              surface="elevated"
+              icon="lucide:send"
+              iconPosition="right"
+            >
+              {submitText}
+            </Button>
+          </div>
+        </form>
+      </Card>
+
+      {
+        variant === 'split' && (
+          <div class="contact__info">
+            <Card variant="glass" surface="glass" class="contact__info-card">
+              <h3 class="contact__info-title">Contact Information</h3>
+
+              <div class="contact__info-items">
+                <div class="contact__info-item">
+                  <Icon name="lucide:mail" class="contact__info-icon" />
+                  <div>
+                    <div class="contact__info-label">Email</div>
+                    <a href="mailto:hello@example.com" class="contact__info-value">
+                      hello@example.com
+                    </a>
+                  </div>
+                </div>
+
+                <div class="contact__info-item">
+                  <Icon name="lucide:phone" class="contact__info-icon" />
+                  <div>
+                    <div class="contact__info-label">Phone</div>
+                    <a href="tel:+1234567890" class="contact__info-value">
+                      +1 (234) 567-890
+                    </a>
+                  </div>
+                </div>
+
+                <div class="contact__info-item">
+                  <Icon name="lucide:map-pin" class="contact__info-icon" />
+                  <div>
+                    <div class="contact__info-label">Office</div>
+                    <div class="contact__info-value">
+                      123 Main Street
+                      <br />
+                      New York, NY 10001
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contact__info-item">
+                  <Icon name="lucide:clock" class="contact__info-icon" />
+                  <div>
+                    <div class="contact__info-label">Hours</div>
+                    <div class="contact__info-value">Mon-Fri: 9AM-6PM EST</div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding: var(--space-2xl) 0;
+  }
+
+  .contact__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+  }
+
+  .contact__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .contact__title {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    margin: 0 0 var(--space-md) 0;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .contact__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    margin: 0 auto;
+    max-width: 65ch;
+  }
+
+  /* Content Layout */
+  .contact__content {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  .contact--default .contact__content {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact--split .contact__content {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  /* Form Card */
+  .contact__form-card {
+    height: 100%;
+  }
+
+  .contact__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .contact__fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .contact__field--full {
+    grid-column: 1 / -1;
+  }
+
+  .contact__actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: var(--space-md);
+  }
+
+  /* Contact Info */
+  .contact__info-card {
+    height: 100%;
+  }
+
+  .contact__info-title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 var(--space-lg) 0;
+    color: var(--color-text-primary);
+  }
+
+  .contact__info-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .contact__info-item {
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+
+  .contact__info-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-brand-primary);
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .contact__info-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+    margin-bottom: var(--space-xs);
+  }
+
+  .contact__info-value {
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .contact__info-value:hover {
+    color: var(--color-brand-primary);
+  }
+
+  /* Dark Mode Adjustments */
+  [data-theme='dark'] .contact__info-value {
+    color: var(--color-text-primary);
+  }
+
+  [data-theme='dark'] .contact__info-value:hover {
+    color: var(--color-brand-primary);
+  }
+
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .contact--split .contact__content {
+      grid-template-columns: 1fr;
+    }
+
+    .contact__fields {
+      grid-template-columns: 1fr;
+    }
+
+    .contact__field {
+      grid-column: 1 / -1;
+    }
+
+    .contact__actions {
+      justify-content: stretch;
+    }
+
+    .contact__actions :global(.btn) {
+      width: 100%;
+    }
+  }
+
+  /* Form Validation Styles */
+  .contact__form:invalid .contact__actions :global(.btn) {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  /* Responsive design and accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .contact__info-value {
+      transition: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .contact__form-card,
+    .contact__info-card {
+      border-width: 2px;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .contact__form {
+      display: none;
+    }
+
+    .contact__info {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

@@ -1,0 +1,321 @@
+---
+import { Icon } from 'astro-icon/components';
+import NavLink from '@/components/molecules/NavLink.astro';
+import { validateNavigationProps, type NavigationProps } from '@/lib/schemas';
+
+// Navigation component props with runtime validation
+export interface Props extends NavigationProps {
+  class?: string;
+}
+
+// Validate props at runtime in development
+if (import.meta.env.DEV) {
+  try {
+    validateNavigationProps(Astro.props);
+  } catch (error) {
+    console.error('Navigation props validation failed:', error);
+  }
+}
+
+const { items, variant = 'default', fixed = false, class: className = '' } = Astro.props;
+
+// Build classes
+const baseClasses = [
+  'navigation',
+  `navigation--${variant}`,
+  fixed && 'navigation--fixed',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<nav class={baseClasses} aria-label="Main navigation">
+  <div class="navigation__container">
+    <!-- Logo/Brand Area -->
+    <div class="navigation__brand">
+      <a href="/" class="navigation__logo">
+        <Icon name="lucide:layers" class="navigation__logo-icon" />
+        <span class="navigation__logo-text">Astro UI</span>
+      </a>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <input
+      type="checkbox"
+      id="nav-toggle"
+      class="navigation__toggle"
+      aria-label="Toggle navigation menu"
+    />
+    <label for="nav-toggle" class="navigation__toggle-label">
+      <span class="navigation__hamburger"></span>
+    </label>
+
+    <!-- Navigation Links -->
+    <ul class="navigation__list">
+      {
+        items.map((item) => (
+          <li class="navigation__item">
+            <NavLink {...item} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .navigation {
+    position: relative;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .navigation--fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .navigation__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 4rem;
+  }
+
+  /* Navigation Variants */
+  .navigation--default {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .navigation--glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow:
+      var(--shadow-sm),
+      inset 0 1px 0 var(--glass-highlight);
+  }
+
+  /* Logo/Brand */
+  .navigation__brand {
+    display: flex;
+    align-items: center;
+    z-index: 2;
+  }
+
+  .navigation__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-lg);
+    transition: all 0.2s ease;
+  }
+
+  .navigation__logo:hover {
+    color: var(--color-brand-primary);
+    transform: translateY(-1px);
+  }
+
+  .navigation__logo-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-brand-primary);
+  }
+
+  .navigation__logo-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Navigation List */
+  .navigation__list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navigation__item {
+    margin: 0;
+  }
+
+  /* Mobile Menu Toggle (Hidden on Desktop) */
+  .navigation__toggle {
+    display: none;
+  }
+
+  .navigation__toggle-label {
+    display: none;
+    cursor: pointer;
+    padding: var(--space-sm);
+    z-index: 2;
+  }
+
+  /* Hamburger Icon */
+  .navigation__hamburger {
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    background: var(--color-text-primary);
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .navigation__hamburger::before,
+  .navigation__hamburger::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .navigation__hamburger::before {
+    top: -8px;
+  }
+
+  .navigation__hamburger::after {
+    bottom: -8px;
+  }
+
+  /* Mobile Menu Active State */
+  .navigation__toggle:checked ~ .navigation__toggle-label .navigation__hamburger {
+    background: transparent;
+  }
+
+  .navigation__toggle:checked ~ .navigation__toggle-label .navigation__hamburger::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  .navigation__toggle:checked ~ .navigation__toggle-label .navigation__hamburger::after {
+    bottom: 0;
+    transform: rotate(-45deg);
+  }
+
+  /* Dark Mode Adjustments */
+  [data-theme='dark'] .navigation--default {
+    background: var(--color-surface);
+    border-bottom-color: var(--color-border);
+  }
+
+  [data-theme='dark'] .navigation--glass {
+    background: rgba(0, 0, 0, 0.8);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .navigation__container {
+      flex-wrap: wrap;
+      padding: var(--space-md) var(--space-lg);
+    }
+
+    .navigation__toggle-label {
+      display: block;
+    }
+
+    .navigation__list {
+      position: fixed;
+      top: 4rem;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--color-background);
+      border-top: 1px solid var(--color-border);
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-100%);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: calc(100vh - 4rem);
+      overflow-y: auto;
+    }
+
+    .navigation--glass .navigation__list {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    [data-theme='dark'] .navigation--glass .navigation__list {
+      background: rgba(0, 0, 0, 0.95);
+    }
+
+    .navigation__toggle:checked ~ .navigation__list {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .navigation__item {
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .navigation__item:last-child {
+      border-bottom: none;
+    }
+  }
+
+  /* Focus styles */
+  .navigation__toggle-label:focus-within {
+    outline: 2px solid var(--color-brand-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-md);
+  }
+
+  /* Responsive design and accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .navigation,
+    .navigation__list,
+    .navigation__hamburger,
+    .navigation__hamburger::before,
+    .navigation__hamburger::after {
+      transition: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .navigation {
+      border-bottom-width: 2px;
+    }
+
+    .navigation--glass {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: var(--color-surface);
+    }
+  }
+
+  /* Fallback for browsers without backdrop-filter support */
+  @supports not (backdrop-filter: blur(20px)) {
+    .navigation--glass {
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    [data-theme='dark'] .navigation--glass {
+      background: rgba(0, 0, 0, 0.98);
+    }
+  }
+</style>
