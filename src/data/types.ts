@@ -106,6 +106,62 @@ export interface ButtonProps {
   class?: string;
 }
 
+export interface NavigationProps {
+  links: { label: string; href: string }[];
+}
+
+export interface HeroProps {
+  title: string;
+  subtitle?: string;
+  ctaButtons?: Array<ButtonProps & { label: string }>;
+}
+
+export interface PricingProps {
+  id?: string;
+  plans: Array<{
+    name: string;
+    price: string;
+    features: string[];
+    cta: ButtonProps & { label: string };
+  }>;
+}
+
+export interface TestimonialsProps {
+  id?: string;
+  testimonials: Array<{
+    quote: string;
+    author: string;
+    avatar?: string;
+  }>;
+}
+
+export interface AboutProps {
+  id?: string;
+  title?: string;
+  content?: string;
+  image?: { src: string; alt: string };
+  cta?: ButtonProps & { label: string };
+}
+
+export interface ContactProps {
+  id?: string;
+  title?: string;
+  description?: string;
+  formFields: Array<{
+    id: string;
+    label: string;
+    type: 'text' | 'email' | 'textarea';
+    placeholder?: string;
+    rows?: number;
+  }>;
+  contactInfo?: {
+    email?: string;
+    phone?: string;
+    address?: string;
+  };
+  cta?: ButtonProps & { label: string };
+}
+
 // Generic component props type
 export type ComponentProps = Record<string, any>;
 

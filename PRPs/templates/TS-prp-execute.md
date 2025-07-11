@@ -1,6 +1,6 @@
 # Execute BASE PRP
 
-## PRP File: $ARGUMENTS
+## PRP File: PRPs/full-project-plan.md
 
 ## Execution Process
 

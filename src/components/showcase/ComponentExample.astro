@@ -1,37 +1,21 @@
 ---
 import type { ComponentExample } from '@/data/types';
-import Button from '@/components/atoms/Button.astro';
-
 export interface Props {
   example: ComponentExample;
-  componentName: string;
+  component: any; // The actual Astro component
 }
 
-const { example, componentName } = Astro.props;
-
-// Component mapping - add new components here as they're created
-const componentMap = {
-  Button: Button,
-} as const;
-
-// Get the component to render
-const Component = componentMap[componentName as keyof typeof componentMap];
-
-if (!Component) {
-  throw new Error(
-    `Component "${componentName}" not found in componentMap. Available components: ${Object.keys(componentMap).join(', ')}`
-  );
-}
+const { example, component } = Astro.props;
 
 // Components that don't use slot content (children)
-const componentsWithoutSlots: string[] = [];
-const shouldRenderChildren = !componentsWithoutSlots.includes(componentName);
+const componentsWithoutSlots: any[] = []; // Use component references directly
+const shouldRenderChildren = !componentsWithoutSlots.includes(component);
 
 // Ensure props exist and have required properties
 const safeProps = example.props || {};
 
 // Type assertion for dynamic component rendering
-const DynamicComponent = Component as any;
+const DynamicComponent = component as any;
 ---
 
 <div class="component-example">

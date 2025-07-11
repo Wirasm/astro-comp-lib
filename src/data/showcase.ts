@@ -1,6 +1,12 @@
 import type { ShowcaseConfig, IconExample, TypographyExample } from './types';
 import { colorPalettes } from './colors';
 import { buttonShowcase } from './components/button';
+import { navigationShowcase } from './components/navigation';
+import { heroShowcase } from './components/hero';
+import { pricingShowcase } from './components/pricing';
+import { testimonialsShowcase } from './components/testimonials';
+import { aboutShowcase } from './components/about';
+import { contactShowcase } from './components/contact';
 
 // Modern typography examples with fluid scaling
 export const typographyExamples: TypographyExample[] = [
@@ -114,8 +120,7 @@ export const coreIcons: IconExample[] = [
 export const showcaseConfig: ShowcaseConfig = {
   site: {
     title: 'Modern Astro Component Library',
-    description:
-      'Claude Code VS Gemini CLI - The ultimate component showdown using PRP',
+    description: 'Claude Code VS Gemini CLI - The ultimate component showdown using PRP',
   },
   sections: {
     colors: colorPalettes,
@@ -123,11 +128,12 @@ export const showcaseConfig: ShowcaseConfig = {
     icons: coreIcons,
     components: [
       buttonShowcase,
-      // Add more components here as they're created
-      // inputShowcase,
-      // cardShowcase,
-      // navigationShowcase,
-      // modalShowcase,
+      navigationShowcase,
+      heroShowcase,
+      pricingShowcase,
+      testimonialsShowcase,
+      aboutShowcase,
+      contactShowcase,
     ],
   },
 };

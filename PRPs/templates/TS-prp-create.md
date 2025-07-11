@@ -1,6 +1,6 @@
 # Create BASE PRP
 
-## Feature: $ARGUMENTS
+## Feature: PRPs/plan.md
 
 Generate a complete PRP for TypeScript/JavaScript feature implementation with deep and thorough research. Ensure rich context is passed to the AI through the PRP to enable one pass implementation success through self-validation and iterative refinement.
 

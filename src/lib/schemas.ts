@@ -40,3 +40,99 @@ export function safeValidateButtonProps(props: unknown): {
   }
   return { success: false, error: result.error };
 }
+
+export const NavigationPropsSchema = z.object({
+  links: z.array(z.object({ label: z.string(), href: z.string() })),
+});
+
+export type NavigationProps = z.infer<typeof NavigationPropsSchema>;
+
+export function validateNavigationProps(data: unknown): NavigationProps {
+  return NavigationPropsSchema.parse(data);
+}
+
+export const HeroPropsSchema = z.object({
+  title: z.string(),
+  subtitle: z.string().optional(),
+  ctaButtons: z.array(buttonSchema.extend({ label: z.string() })).optional(),
+});
+
+export type HeroProps = z.infer<typeof HeroPropsSchema>;
+
+export function validateHeroProps(data: unknown): HeroProps {
+  return HeroPropsSchema.parse(data);
+}
+
+export const PricingPropsSchema = z.object({
+  plans: z.array(
+    z.object({
+      name: z.string(),
+      price: z.string(),
+      features: z.array(z.string()),
+      cta: buttonSchema.extend({ label: z.string() }),
+    })
+  ),
+});
+
+export type PricingProps = z.infer<typeof PricingPropsSchema>;
+
+export function validatePricingProps(data: unknown): PricingProps {
+  return PricingPropsSchema.parse(data);
+}
+
+export const TestimonialsPropsSchema = z.object({
+  testimonials: z.array(
+    z.object({
+      quote: z.string(),
+      author: z.string(),
+      avatar: z.string().optional(),
+    })
+  ),
+});
+
+export type TestimonialsProps = z.infer<typeof TestimonialsPropsSchema>;
+
+export function validateTestimonialsProps(data: unknown): TestimonialsProps {
+  return TestimonialsPropsSchema.parse(data);
+}
+
+export const AboutPropsSchema = z.object({
+  title: z.string().optional(),
+  content: z.string().optional(),
+  image: z.object({ src: z.string(), alt: z.string() }).optional(),
+  cta: buttonSchema.extend({ label: z.string() }).optional(),
+});
+
+export type AboutProps = z.infer<typeof AboutPropsSchema>;
+
+export function validateAboutProps(data: unknown): AboutProps {
+  return AboutPropsSchema.parse(data);
+}
+
+export const ContactPropsSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  formFields: z.array(
+    z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.enum(['text', 'email', 'textarea']),
+      placeholder: z.string().optional(),
+      rows: z.number().optional(),
+    })
+  ),
+  contactInfo: z
+    .object({
+      email: z.string().email().optional(),
+      phone: z.string().optional(),
+      address: z.string().optional(),
+    })
+    .optional(),
+  cta: buttonSchema.extend({ label: z.string() }).optional(),
+});
+
+export type ContactProps = z.infer<typeof ContactPropsSchema>;
+
+export function validateContactProps(data: unknown): ContactProps {
+  return ContactPropsSchema.parse(data);
+}

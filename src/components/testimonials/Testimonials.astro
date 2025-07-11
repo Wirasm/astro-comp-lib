@@ -1,0 +1,93 @@
+---
+import { validateTestimonialsProps, type TestimonialsProps } from '@/lib/schemas';
+
+export interface Props extends TestimonialsProps {
+  id?: string;
+}
+
+if (import.meta.env.DEV) {
+  try {
+    validateTestimonialsProps(Astro.props);
+  } catch (error) {
+    console.error('Testimonials props validation failed:', error);
+  }
+}
+
+const { id, testimonials } = Astro.props;
+---
+
+<section class="testimonials" id={id}>
+  <h2 class="testimonials-title">What Our Clients Say</h2>
+  <div class="testimonials-grid">
+    {
+      testimonials.map((testimonial) => (
+        <div class="testimonial-card">
+          <p class="testimonial-quote">"{testimonial.quote}"</p>
+          <div class="testimonial-author">
+            {testimonial.avatar && (
+              <img src={testimonial.avatar} alt={testimonial.author} class="testimonial-avatar" />
+            )}
+            <p class="testimonial-name">{testimonial.author}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    padding: var(--space-4xl) var(--space-lg);
+    text-align: center;
+  }
+
+  .testimonials-title {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-xl);
+    justify-content: center;
+  }
+
+  .testimonial-card {
+    background-color: var(--color-surface-2);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .testimonial-quote {
+    font-size: var(--text-lg);
+    font-style: italic;
+    margin-bottom: var(--space-md);
+    color: var(--color-text-primary);
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .testimonial-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-brand-primary);
+  }
+
+  .testimonial-name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+  }
+</style>

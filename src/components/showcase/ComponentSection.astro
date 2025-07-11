@@ -4,9 +4,10 @@ import ComponentExample from './ComponentExample.astro';
 
 export interface Props {
   showcase: ComponentShowcase;
+  component: any; // This will be the actual Astro component
 }
 
-const { showcase } = Astro.props;
+const { showcase, component } = Astro.props;
 ---
 
 <section class="component-section section" id={showcase.id}>
@@ -23,7 +24,7 @@ const { showcase } = Astro.props;
 
         <div class="component-grid">
           {group.examples.map((example) => (
-            <ComponentExample example={example} componentName={showcase.component} />
+            <ComponentExample example={example} component={component} />
           ))}
         </div>
       </div>

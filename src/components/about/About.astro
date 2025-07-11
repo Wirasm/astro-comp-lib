@@ -1,0 +1,83 @@
+---
+import { validateAboutProps, type AboutProps } from '@/lib/schemas';
+import Button from '../atoms/Button.astro';
+
+export interface Props extends AboutProps {
+  id?: string;
+}
+
+if (import.meta.env.DEV) {
+  try {
+    validateAboutProps(Astro.props);
+  } catch (error) {
+    console.error('About props validation failed:', error);
+  }
+}
+
+const { id, title, content, image, cta } = Astro.props;
+---
+
+<section class="about" id={id}>
+  <div class="about-content">
+    {title && <h2 class="about-title">{title}</h2>}
+    {content && <p class="about-text">{content}</p>}
+    {
+      cta && (
+        <Button href={cta.href} variant={cta.variant}>
+          {cta.label}
+        </Button>
+      )
+    }
+  </div>
+  {image && <img src={image.src} alt={image.alt} class="about-image" />}
+</section>
+
+<style>
+  .about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3xl);
+    padding: var(--space-4xl) var(--space-lg);
+    background-color: var(--color-surface-1);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-xl);
+  }
+
+  @media (min-width: 768px) {
+    .about {
+      flex-direction: row;
+      text-align: left;
+    }
+
+    .about:nth-of-type(even) {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .about-content {
+    flex: 1;
+  }
+
+  .about-title {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--space-md);
+    color: var(--color-brand-primary);
+  }
+
+  .about-text {
+    font-size: var(--text-lg);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--space-xl);
+    color: var(--color-text-secondary);
+  }
+
+  .about-image {
+    flex: 1;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+  }
+</style>
